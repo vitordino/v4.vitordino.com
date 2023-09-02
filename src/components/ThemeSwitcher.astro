@@ -1,0 +1,136 @@
+<button class='theme-switcher' data-theme-switcher>
+	<svg class='theme-switcher-svg' viewBox='0 0 24 24'>
+		<defs>
+			<mask id='mask' stroke='none'>
+				<circle class='theme-switcher-mask-main' fill='#fff'></circle>
+				<circle class='theme-switcher-mask-other' fill='#000'></circle>
+			</mask>
+		</defs>
+		<g class='theme-switcher-rays'>
+			<line x1='12' y1='1' x2='12' y2='3'></line>
+			<line x1='12' y1='21' x2='12' y2='23'></line>
+			<line x1='4.22' y1='4.22' x2='5.64' y2='5.64'></line>
+			<line x1='18.36' y1='18.36' x2='19.78' y2='19.78'></line>
+			<line x1='1' y1='12' x2='3' y2='12'></line>
+			<line x1='21' y1='12' x2='23' y2='12'></line>
+			<line x1='4.22' y1='19.78' x2='5.64' y2='18.36'></line>
+			<line x1='18.36' y1='5.64' x2='19.78' y2='4.22'></line>
+		</g>
+		<g class='theme-switcher-circles' mask='url(#mask)'>
+			<circle class='theme-switcher-main' fill='none'></circle>
+			<circle class='theme-switcher-other' fill='none'></circle>
+		</g>
+	</svg>
+</button>
+
+<script>
+	const onClick = () => {
+		const html = document.documentElement
+		// const dark = html.classList.contains('dark')
+		// if (dark) return html.classList.remove('dark')
+		// return html.classList.add('dark')
+		const theme = html.getAttribute('data-theme')
+		if (theme === 'dark') return html.setAttribute('data-theme', 'light')
+		return html.setAttribute('data-theme', 'dark')
+	}
+	const themeSwitcherList = document.querySelectorAll('[data-theme-switcher]')
+	themeSwitcherList.forEach((button) => {
+		button.addEventListener('click', onClick)
+	})
+</script>
+
+<style is:global>
+	.theme-switcher {
+		padding: 1rem;
+		position: fixed;
+		bottom: 0;
+		right: 0;
+		opacity: 0.25;
+		outline: none;
+		transition: 0.25s opacity;
+	}
+	.theme-switcher:hover,
+	.theme-switcher:focus {
+		opacity: 1;
+	}
+	.theme-switcher-svg {
+		margin: 0;
+		fill: none;
+		width: 20px;
+		height: 20px;
+		stroke: currentColor;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+	.theme-switcher-rays {
+		transition: 0.375s opacity 0.375s;
+	}
+	.theme-switcher-main {
+		cx: 12px;
+		cy: 12px;
+		r: 5px;
+		stroke: currentColor;
+		transition:
+			0.375s r 0.375s,
+			0.75s stroke;
+	}
+	.theme-switcher-other {
+		cx: 12px;
+		cy: 12px;
+		r: 5px;
+		stroke: transparent;
+		transition:
+			0.375s cx,
+			0.375s cy,
+			0.375s r 0.375s,
+			0.125s stroke 0.25s;
+	}
+	.theme-switcher-mask-main {
+		cx: 12px;
+		cy: 12px;
+		r: 11px;
+	}
+	.theme-switcher-mask-other {
+		r: 4px;
+		cx: 12px;
+		cy: 12px;
+		transition:
+			0.375s cx,
+			0.375s cy,
+			0.375s r 0.375s;
+	}
+
+	/* dark mode */
+
+	html[data-theme='dark'] .theme-switcher-rays {
+		opacity: 0;
+		transition: 0.375s all;
+	}
+	html[data-theme='dark'] .theme-switcher-main {
+		r: 10px;
+		transition:
+			0.375s r,
+			0.75s stroke;
+	}
+	html[data-theme='dark'] .theme-switcher-other {
+		stroke: currentColor;
+		r: 9px;
+		cx: 18px;
+		cy: 6px;
+		transition:
+			0.375s r,
+			0.375s cx 0.375s,
+			0.375s cy 0.375s,
+			0.375s stroke;
+	}
+	html[data-theme='dark'] .theme-switcher-mask-other {
+		r: 8px;
+		cx: 18px;
+		cy: 6px;
+		transition:
+			0.375s r,
+			0.375s cx 0.375s,
+			0.375s cy 0.375s;
+	}
+</style>

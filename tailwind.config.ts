@@ -1,8 +1,10 @@
 import type { Config } from 'tailwindcss'
-import { colors } from './tailwind-radix-colors'
+import windyRadixPlugin from 'windy-radix-palette'
+import { slate, slateDark } from '@radix-ui/colors'
 
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-	theme: { extend: { colors } },
-	plugins: [],
+	plugins: [windyRadixPlugin({ colors: { slate, slateDark } })],
+	// darkMode: 'class',
+	darkMode: ['class', '[data-theme="dark"]'],
 } satisfies Config
