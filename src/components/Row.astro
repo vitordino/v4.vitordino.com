@@ -1,0 +1,19 @@
+---
+import { cn } from '@utils/cn'
+import Container from '@components/Container.astro'
+type Props = { class?: string; container?: boolean }
+const className = cn('grid-cols-16 grid gap-4 sm:gap-6 md:gap-8', Astro.props.class)
+const container = Astro.props.container
+---
+
+{
+	container ? (
+		<Container class={className}>
+			<slot />
+		</Container>
+	) : (
+		<div class={className}>
+			<slot />
+		</div>
+	)
+}

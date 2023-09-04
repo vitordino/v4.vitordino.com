@@ -26,16 +26,21 @@
 <script>
 	const onClick = () => {
 		const html = document.documentElement
-		// const dark = html.classList.contains('dark')
-		// if (dark) return html.classList.remove('dark')
-		// return html.classList.add('dark')
 		const theme = html.getAttribute('data-theme')
 		if (theme === 'dark') return html.setAttribute('data-theme', 'light')
 		return html.setAttribute('data-theme', 'dark')
 	}
+	const onContextMenu = (e: Event) => {
+		e.preventDefault()
+		const html = document.documentElement
+		const grid = html.getAttribute('data-grid')
+		if (grid === 'true') return html.setAttribute('data-grid', 'false')
+		return html.setAttribute('data-grid', 'true')
+	}
 	const themeSwitcherList = document.querySelectorAll('[data-theme-switcher]')
 	themeSwitcherList.forEach((button) => {
 		button.addEventListener('click', onClick)
+		button.addEventListener('contextmenu', onContextMenu)
 	})
 </script>
 
