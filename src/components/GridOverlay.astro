@@ -1,6 +1,7 @@
 ---
 import Row from './Row.astro'
 import tailwindConfig from '../../tailwind.config.ts'
+import { cn } from '@utils/cn'
 const leftPad = (s: number) => (s.toString().length === 1 ? '0' + s : '' + s)
 const fromArray = (length: number) => Array.from({ length }, (_, i) => leftPad(i + 1))
 const screens = Object.entries(tailwindConfig.theme.screens)
@@ -12,9 +13,23 @@ const screens = Object.entries(tailwindConfig.theme.screens)
 	class='pointer-events-none fixed top-0 min-h-screen w-full select-none font-mono text-xs text-tomato-8 opacity-0 transition-opacity duration-300 [html[data-grid="true"]_&]:opacity-100'
 >
 	<Row container>
-		{fromArray(16).map((x) => <div class='flex min-h-screen items-end bg-tomato-8 bg-opacity-10 py-1'>{x}</div>)}
+		{
+			fromArray(16).map((x, i) => (
+				<div
+					class={cn('hidden min-h-screen items-end bg-tomato-8 bg-opacity-10 py-1', {
+						'col-span-4 flex': !(i % 4),
+						'md:col-span-2 md:flex': !(i % 2),
+						'lg:col-span-1 lg:flex': true,
+					})}
+				>
+					{x}
+					<span class='md:hidden'>&nbsp;-&nbsp;{leftPad(i + 4)}</span>
+					<span class='hidden md:inline lg:hidden'>&nbsp;-&nbsp;{leftPad(i + 2)}</span>
+				</div>
+			))
+		}
 	</Row>
-	<div data-grid-overlay-width-element class='absolute bottom-1 left-4 origin-top-left -rotate-90'></div>
+	<div data-grid-overlay-width-element class='absolute bottom-4 left-4 origin-top-left -rotate-90'></div>
 </div>
 <script define:vars={{ screens }}>
 	const getVisibleBreakpoints = (w) => screens.reduce((acc, curr) => (curr[1] > w ? acc : [...acc, curr]), [['xs', 0]])
