@@ -1,0 +1,170 @@
+<script>
+	const range = (n = 0) => [...Array(n)].map((_, i) => i)
+
+	type CircleProps = {
+		ctx: CanvasRenderingContext2D
+		x: number
+		y: number
+		size: number
+		fill?: string
+		stroke?: string
+		strokeWidth?: number
+	}
+
+	const circle = ({ ctx, x, y, size, fill, stroke, strokeWidth }: CircleProps) => {
+		ctx.beginPath()
+		ctx.arc(x, y, size, 0, 2 * Math.PI)
+		if (fill) {
+			ctx.fillStyle = fill
+			ctx.fill()
+		}
+		if (stroke && strokeWidth) {
+			ctx.strokeStyle = stroke
+			ctx.lineWidth = strokeWidth
+			ctx.stroke()
+		}
+	}
+
+	type GridProps = {
+		ctx: CanvasRenderingContext2D
+		size: number
+		width: number
+		height: number
+		color: string
+		space: number
+		padding: number
+	}
+	const grid = ({ ctx, size, width, height, color, space, padding }: GridProps) => {
+		const c = range(Math.floor(width / space) - padding)
+		const l = range(Math.floor(height / space) - padding)
+
+		return c
+			.flatMap((i) =>
+				l.map((j) => ({
+					x: (i + padding) * space,
+					y: (j + padding) * space,
+				})),
+			)
+			.forEach(({ x, y }) => circle({ ctx, size, fill: color, x, y }))
+	}
+
+	type RipplesProps = {
+		ctx: CanvasRenderingContext2D
+		size: number
+		width: number
+		height: number
+		count: number
+		mouseX: number
+		mouseY: number
+	}
+	const ripples = ({ ctx, size, width, height, mouseX, mouseY, count }: RipplesProps) =>
+		range(count).forEach((n) => {
+			circle({
+				ctx,
+				size: size * (n + 1),
+				x: mouseX + size * n - n * size * (mouseX / (width / 2)),
+				y: mouseY + size * n - n * size * (mouseY / (height / 2)),
+				stroke: '#1D7969',
+				strokeWidth: 1,
+			})
+		})
+
+	const draw =
+		(ctx: CanvasRenderingContext2D) =>
+		({ width = 0, height = 0, mouseX = 0, mouseY = 0 }) => {
+			if (!ctx) return
+
+			ctx.clearRect(0, 0, width, height)
+			grid({ ctx, width, height, color: '#2C2C2C', space: 24, size: 1, padding: 1 })
+			ripples({ ctx, width, height, mouseX, mouseY, size: 24, count: 24 })
+		}
+
+	document.querySelectorAll<HTMLDivElement>('[data-etymos-hero]').forEach((div) => {
+		const canvas = div.querySelector<HTMLCanvasElement>('canvas')
+		const ctx = canvas?.getContext('2d')
+		if (!canvas || !ctx) return
+
+		const rect = div.getBoundingClientRect()
+		// proxy for updating
+		const params = {
+			width: rect.width,
+			height: rect.height,
+			left: rect.left,
+			top: rect.top,
+			mouseX: rect.width / 2,
+			mouseY: rect.height / 2,
+		}
+
+		const handler: ProxyHandler<typeof params> = {
+			set: (obj, prop: keyof typeof obj, value) => {
+				if (obj[prop] !== value) {
+					obj[prop] = value
+					requestAnimationFrame(() => draw(ctx)({ ...obj, [prop]: value }))
+				}
+				return true
+			},
+		}
+
+		const proxy = new Proxy(params, handler)
+
+		const setRetina = ({ width, height, ratio }: { width: number; height: number; ratio: number }) => {
+			canvas.width = width * ratio
+			canvas.height = height * ratio
+			canvas.style.width = width + 'px'
+			canvas.style.height = height + 'px'
+			ctx.scale(ratio, ratio)
+		}
+
+		const updateRectProxy = ({
+			width,
+			height,
+			left,
+			top,
+		}: {
+			width: number
+			height: number
+			left: number
+			top: number
+		}) => {
+			proxy.width = width
+			proxy.height = height
+			proxy.left = left
+			proxy.top = top
+		}
+
+		const scroll = () => {
+			const { width, height, left, top } = div.getBoundingClientRect()
+			updateRectProxy({ width, height, left, top })
+		}
+
+		window.addEventListener('scroll', scroll)
+
+		const resize = () => {
+			const { width, height, left, top } = div.getBoundingClientRect()
+			setRetina({ width, height, ratio: window.devicePixelRatio })
+			updateRectProxy({ width, height, left, top })
+		}
+
+		window.addEventListener('resize', resize)
+
+		const mouseMove = (e: MouseEvent) => {
+			proxy.mouseX = e.clientX - proxy.left
+			proxy.mouseY = e.clientY - proxy.top
+		}
+		window.addEventListener('mousemove', mouseMove)
+
+		resize()
+		draw(ctx)(proxy)
+	})
+</script>
+
+<div data-etymos-hero>
+	<canvas></canvas>
+</div>
+
+<style>
+	div {
+		width: 100%;
+		height: 50vh;
+	}
+</style>
