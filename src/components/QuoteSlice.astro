@@ -1,0 +1,9 @@
+---
+type Props = { author?: string }
+const { author } = Astro.props
+---
+
+<blockquote class='QuoteSlice'>
+	<slot />
+	<div>{author}</div>
+</blockquote>

@@ -1,7 +1,8 @@
 ---
-import Row from './Row.astro'
 import tailwindConfig from '../../tailwind.config.ts'
 import { cn } from '@utils/cn'
+import Row from '@components/Row.astro'
+
 const leftPad = (s: number) => (s.toString().length === 1 ? '0' + s : '' + s)
 const fromArray = (length: number) => Array.from({ length }, (_, i) => leftPad(i + 1))
 const screens = Object.entries(tailwindConfig.theme.screens)
