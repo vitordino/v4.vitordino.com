@@ -24,18 +24,25 @@
 </button>
 
 <script>
+	const setTheme = (theme: 'light' | 'dark') => {
+		document.documentElement.setAttribute('data-theme', theme)
+		localStorage?.setItem('theme', theme)
+	}
+	const setGrid = (grid: boolean) => {
+		document.documentElement.setAttribute('data-grid', grid.toString())
+		localStorage?.setItem('grid', grid.toString())
+	}
 	const onClick = () => {
-		const html = document.documentElement
-		const theme = html.getAttribute('data-theme')
-		if (theme === 'dark') return html.setAttribute('data-theme', 'light')
-		return html.setAttribute('data-theme', 'dark')
+		const theme = document.documentElement.getAttribute('data-theme')
+		if (theme === 'dark') return setTheme('light')
+		return setTheme('dark')
 	}
 	const onContextMenu = (e: Event) => {
 		e.preventDefault()
 		const html = document.documentElement
 		const grid = html.getAttribute('data-grid')
-		if (grid === 'true') return html.setAttribute('data-grid', 'false')
-		return html.setAttribute('data-grid', 'true')
+		if (grid === 'true') return setGrid(false)
+		return setGrid(true)
 	}
 	const themeSwitcherList = document.querySelectorAll('[data-theme-switcher]')
 	themeSwitcherList.forEach((button) => {

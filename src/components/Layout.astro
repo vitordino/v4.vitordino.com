@@ -14,6 +14,16 @@ const { title } = Astro.props
 		<meta name='viewport' content='width=device-width' />
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 		<title>{title}</title>
+		<script is:inline>
+			const theme = (() => {
+				const media = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+				const user = localStorage?.getItem?.('theme')
+				return user || media
+			})()
+
+			document.documentElement.setAttribute('data-theme', theme)
+			document.documentElement.setAttribute('data-grid', localStorage?.getItem?.('grid'))
+		</script>
 	</head>
 	<body>
 		<slot />
