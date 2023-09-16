@@ -1,0 +1,24 @@
+---
+import { cn } from '@utils/cn'
+import tailwindConfig from '../../tailwind.config.ts'
+
+type Breakpoints = 'xs' | keyof typeof tailwindConfig.theme.screens
+type BreakpointProps = Partial<Record<Breakpoints, number>>
+type Props = { class?: string; display?: 'block' | 'flex' | 'grid' } & BreakpointProps
+const { xs, sm, md, lg, xl, display } = Astro.props
+const xxl = Astro.props['2xl']
+
+const className = cn(
+	Astro.props.class,
+	xs === 0 ? 'hidden' : xs && `${display} col-span-${xs}`,
+	sm === 0 ? 'sm:hidden' : sm && `sm:${display} sm:col-span-${sm}`,
+	md === 0 ? 'md:hidden' : md && `md:${display} md:col-span-${md}`,
+	lg === 0 ? 'lg:hidden' : lg && `lg:${display} lg:col-span-${lg}`,
+	xl === 0 ? 'xl:hidden' : xl && `xl:${display} xl:col-span-${xl}`,
+	xxl === 0 ? '2xl:hidden' : xxl && `2xl:${display} 2xl:col-span-${xxl}`,
+)
+---
+
+<div class={className}>
+	<slot />
+</div>
