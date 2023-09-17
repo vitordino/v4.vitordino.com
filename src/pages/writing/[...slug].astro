@@ -1,6 +1,9 @@
 ---
 import { getCollection } from 'astro:content'
 import ArticleLayout from '@components/ArticleLayout.astro'
+import P from '@markdown/P.astro'
+import BlockQuote from '@markdown/BlockQuote.astro'
+import Pre from '@markdown/Pre.astro'
 
 export const getStaticPaths = async () => {
 	const writingEntries = await getCollection('writing')
@@ -11,10 +14,10 @@ export const getStaticPaths = async () => {
 }
 
 const { entry } = Astro.props
-const { Content } = await entry.render()
+const { Content, components } = await entry.render()
 ---
 
 <ArticleLayout>
 	<h1>{entry.data.title}</h1>
-	<Content />
+	<Content components={{ ...components, blockquote: BlockQuote, p: P, pre: Pre }} />
 </ArticleLayout>

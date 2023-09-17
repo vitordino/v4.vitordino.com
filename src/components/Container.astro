@@ -1,9 +1,10 @@
 ---
 import { cn } from '@utils/cn'
-type Props = { class?: string }
+export type Props = { class?: string; as?: string }
 const className = Astro.props.class
+const Element = Astro.props.as || 'div'
 ---
 
-<div class={cn('mx-auto max-w-7xl px-4 md:px-8 lg:px-10', className)}>
+<Element class={cn('mx-auto max-w-7xl px-4 md:px-8 lg:px-10', className)}>
 	<slot />
-</div>
+</Element>

@@ -1,0 +1,15 @@
+---
+import Row from '@components/Row.astro'
+import Column from '@components/Column.astro'
+---
+
+<div class='mb-16 mt-8 max-w-full overflow-x-scroll bg-slate-3 lg:bg-inherit'>
+	<Row container>
+		<Column xs={0} xl={1} />
+		<Column xs={16} lg={14} xl={12}>
+			<pre
+				class='rounded-sm py-8 font-mono text-xl leading-loose lg:bg-slate-3 lg:px-[7.5%] xl:px-[8.675%]'><slot /></pre>
+		</Column>
+	</Row>
+	<div></div>
+</div>

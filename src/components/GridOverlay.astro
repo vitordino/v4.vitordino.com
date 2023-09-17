@@ -18,14 +18,14 @@ const screens = Object.entries(tailwindConfig.theme.screens)
 			fromArray(16).map((x, i) => (
 				<Column
 					xs={i % 4 ? 4 : 0}
-					md={i % 2 ? 2 : 0}
-					lg={1}
+					sm={i % 2 ? 2 : 0}
+					md={1}
 					display='flex'
 					class='min-h-screen items-end bg-tomato-8 bg-opacity-10 py-1'
 				>
 					{x}
-					<span class='md:hidden'>&nbsp;-&nbsp;{leftPad(i + 4)}</span>
-					<span class='hidden md:inline lg:hidden'>&nbsp;-&nbsp;{leftPad(i + 2)}</span>
+					<span class='sm:hidden'>&nbsp;-&nbsp;{leftPad(i + 4)}</span>
+					<span class='hidden sm:inline md:hidden'>&nbsp;-&nbsp;{leftPad(i + 2)}</span>
 				</Column>
 			))
 		}
