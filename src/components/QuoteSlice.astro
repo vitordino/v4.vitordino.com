@@ -5,34 +5,36 @@ type Props = { author?: string }
 const { author } = Astro.props
 ---
 
-<blockquote class='QuoteSlice relative bg-slate-3 pb-48 pt-32 dark:bg-slate-2'>
-	<!-- quote slice decoration -->
-	<div>
-		<Row container>
-			<Column xs={0} xl={1} />
-			<Column xs={1}>
-				<div
-					class='relative font-serif text-7xl font-black leading-8 text-slate-6 before:block before:content-["“"] lg:absolute lg:-translate-y-1/4 lg:text-8xl'
-				>
-				</div>
-			</Column>
-		</Row>
-	</div>
-	<slot />
-	{
-		author && (
+<section class='slice quote-slice'>
+	<blockquote class='relative bg-slate-3 pb-48 pt-32 dark:bg-slate-2'>
+		<!-- quote slice decoration -->
+		<div>
 			<Row container>
-				<Column xs={0} lg={1} xl={2} />
-				<Column xs={16} lg={12} xl={10}>
-					<cite class='text-md mt-8 block font-serif leading-6 text-slate-9'>{author}</cite>
+				<Column xs={0} xl={1} />
+				<Column xs={1}>
+					<div
+						class='relative font-serif text-7xl font-black leading-8 text-slate-6 before:block before:content-["“"] lg:absolute lg:-translate-y-1/4 lg:text-8xl'
+					>
+					</div>
 				</Column>
 			</Row>
-		)
-	}
-</blockquote>
+		</div>
+		<slot />
+		{
+			author && (
+				<Row container>
+					<Column xs={0} lg={1} xl={2} />
+					<Column xs={16} lg={12} xl={10}>
+						<cite class='text-md mt-8 block font-serif leading-6 text-slate-9'>{author}</cite>
+					</Column>
+				</Row>
+			)
+		}
+	</blockquote>
+</section>
 
 <style is:global>
-	.QuoteSlice p {
+	.quote-slice p {
 		@apply text-2xl leading-9 sm:text-4xl sm:leading-snug md:text-5xl md:leading-[4rem];
 		max-width: 22em;
 	}

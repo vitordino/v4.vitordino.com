@@ -5,12 +5,14 @@ const { caption } = Astro.props
 import Container from '@components/Container.astro'
 ---
 
-<figure class='image-slice text-md bg-slate-2 font-serif text-slate-12'>
-	<slot />
-	<Container class='py-5'>
-		<figcaption><slot name='caption' /></figcaption>
-	</Container>
-</figure>
+<section class='slice image-slice'>
+	<figure class='text-md bg-slate-2 font-serif text-slate-12'>
+		<slot />
+		<Container class='py-5'>
+			<figcaption><slot name='caption' /></figcaption>
+		</Container>
+	</figure>
+<section>
 
 <style is:global>
 	.image-slice a {

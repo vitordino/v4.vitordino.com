@@ -80,12 +80,12 @@
 		}
 
 	document.querySelectorAll<HTMLDivElement>('[data-etymos-hero]').forEach((div) => {
-		const canvas = div.querySelector<HTMLCanvasElement>('canvas')
-		const ctx = canvas?.getContext('2d')
-		if (!canvas || !ctx) return
+		const canvas = document.createElement('canvas')
+		div.appendChild(canvas)
+		const ctx = canvas.getContext('2d')
 
 		const rect = div.getBoundingClientRect()
-		// proxy for updating
+		// proxyfied for updating
 		const params = {
 			width: rect.width,
 			height: rect.height,
@@ -158,13 +158,4 @@
 	})
 </script>
 
-<div data-etymos-hero>
-	<canvas></canvas>
-</div>
-
-<style>
-	div {
-		width: 100%;
-		height: 50vh;
-	}
-</style>
+<div data-etymos-hero class={Astro.props.class}></div>

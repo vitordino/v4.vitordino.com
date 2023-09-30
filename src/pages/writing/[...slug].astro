@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
-import ArticleLayout from '@components/ArticleLayout.astro'
+import Layout from '@components/Layout.astro'
+import ArticleHero from '@components/ArticleHero.astro'
 import P from '@markdown/P.astro'
 import A from '@markdown/A.astro'
 import H2 from '@markdown/H2.astro'
@@ -21,11 +22,26 @@ export const getStaticPaths = async () => {
 
 const { entry } = Astro.props
 const { Content, components } = await entry.render()
+const customComponents = {
+	...components,
+	blockquote: BlockQuote,
+	h2: H2,
+	p: P,
+	pre: Pre,
+	hr: HR,
+	a: A,
+	ol: OL,
+	ul: UL,
+	li: LI,
+}
 ---
 
-<ArticleLayout>
-	<h1>{entry.data.title}</h1>
-	<Content
-		components={{ ...components, blockquote: BlockQuote, h2: H2, p: P, pre: Pre, hr: HR, a: A, ol: OL, ul: UL, li: LI }}
-	/>
-</ArticleLayout>
+<Layout title={entry.data.title}>
+	<ArticleHero {...entry.data} />
+	<Content components={customComponents} />
+</Layout>
+<style is:global>
+	.slice:nth-child(2n + 1) {
+		@apply bg-slate-3 dark:bg-slate-2;
+	}
+</style>
