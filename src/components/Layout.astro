@@ -26,6 +26,58 @@ const { title } = Astro.props
 			document.documentElement.setAttribute('data-grid', localStorage?.getItem?.('grid'))
 			darkMediaQuery.addEventListener('change', () => document.documentElement.setAttribute('data-theme', getTheme()))
 		</script>
+		<style>
+			html {
+				-webkit-font-smoothing: antialiased;
+				font-smoothing: antialiased;
+				font-feature-settings:
+					'kern',
+					'liga',
+					'calt',
+					'pnum' 0,
+					'tnum',
+					'onum' 0,
+					'lnum',
+					'dlig',
+					'zero',
+					'case';
+			}
+			@font-face {
+				font-family: 'Tiempos Text';
+				src:
+					url('/fonts/tiempos-text/TiemposText-Regular.woff') format('woff'),
+					url('/fonts/tiempos-text/TiemposText-Regular.ttf') format('truetype');
+				font-style: normal;
+				font-weight: 400;
+			}
+
+			@font-face {
+				font-family: 'Tiempos Text';
+				src:
+					url('/fonts/tiempos-text/TiemposText-RegularItalic.woff') format('woff'),
+					url('/fonts/tiempos-text/TiemposText-RegularItalic.ttf'}) format('truetype');
+				font-style: italic;
+				font-weight: 400;
+			}
+
+			@font-face {
+				font-family: 'Tiempos Text';
+				src:
+					url('/fonts/tiempos-text/TiemposText-Semibold.woff') format('woff'),
+					url('/fonts/tiempos-text/TiemposText-Semibold.ttf'}) format('truetype');
+				font-style: normal;
+				font-weight: 500;
+			}
+
+			@font-face {
+				font-family: 'Tiempos Text';
+				src:
+					url('/fonts/tiempos-text/TiemposText-SemiboldItalic.woff') format('woff'),
+					url('/fonts/tiempos-text/TiemposText-SemiboldItalic.ttf'}) format('truetype');
+				font-style: italic;
+				font-weight: 500;
+			}
+		</style>
 	</head>
 	<body>
 		<slot />

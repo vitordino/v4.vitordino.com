@@ -1,9 +1,19 @@
 ---
 type Props = { caption?: string }
 const { caption } = Astro.props
+
+import Container from '@components/Container.astro'
 ---
 
-<figure>
+<figure class='image-slice text-md bg-slate-2 font-serif text-slate-12'>
 	<slot />
-	{caption && <figcaption>{caption}</figcaption>}
+	<Container class='py-5'>
+		<figcaption><slot name='caption' /></figcaption>
+	</Container>
 </figure>
+
+<style is:global>
+	.image-slice a {
+		text-decoration: underline;
+	}
+</style>
