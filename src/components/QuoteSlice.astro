@@ -24,7 +24,7 @@ const { author } = Astro.props
 			author && (
 				<Row container>
 					<Column xs={0} lg={1} xl={2} />
-					<Column xs={16} lg={12} xl={10}>
+					<Column xs={16} lg={12} xl={12}>
 						<cite class='text-md mt-8 block font-serif leading-6 text-slate-9'>{author}</cite>
 					</Column>
 				</Row>
@@ -35,7 +35,6 @@ const { author } = Astro.props
 
 <style is:global>
 	.quote-slice p {
-		@apply text-2xl leading-9 sm:text-4xl sm:leading-snug md:text-5xl md:leading-[4rem];
-		max-width: 22em;
+		@apply text-2xl font-extrabold leading-9 sm:text-4xl sm:leading-snug md:text-5xl md:leading-[4rem];
 	}
 </style>
