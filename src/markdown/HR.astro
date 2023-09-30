@@ -1,0 +1,25 @@
+---
+import { cn } from '@utils/cn'
+import Row from '@components/Row.astro'
+import Column from '@components/Column.astro'
+---
+
+<Row container>
+	<Column xs={0} xl={1} />
+	<Column xs={16} lg={14} xl={12}>
+		<hr
+			class={cn(
+				'relative my-24 h-8 overflow-hidden border-none pb-0 pt-0 text-slate-8',
+				'before:absolute before:left-0 before:top-1/2 before:bg-current before:w-full before:h-[1px]',
+				'after:h-[34px] after:w-8 after:absolute after:left-1/2 after:bg-[var(--bg)] after:z-[1] after:top-1/2',
+			)}
+		/>
+	</Column>
+</Row>
+
+<style>
+	hr:after {
+		transform: translate(-50%, -50%) skewX(-45deg);
+		box-shadow: 0 0 0 1.5px currentColor;
+	}
+</style>

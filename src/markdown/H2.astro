@@ -3,9 +3,9 @@ import Row from '@components/Row.astro'
 import Column from '@components/Column.astro'
 ---
 
-<Row container class='font-serif text-xl leading-10 md:text-2xl md:leading-loose'>
+<Row container>
 	<Column xs={0} lg={1} xl={2} />
 	<Column xs={16} lg={12} xl={10}>
-		<p class=''><slot /></p>
+		<h2 class='font-serif text-2xl leading-loose md:text-[32px] md:leading-[48px]'><slot /></h2>
 	</Column>
 </Row>

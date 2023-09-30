@@ -14,10 +14,13 @@ hero:
   canvas: etymos
 ---
 
+import { Image, getImage } from 'astro:assets'
 import EtymosCanvas from '@components/EtymosCanvas.astro'
 import TextSlice from '@components/TextSlice.astro'
 import QuoteSlice from '@components/QuoteSlice.astro'
 import ImageSlice from '@components/ImageSlice.astro'
+
+import vertbaseImage from './vertbase.png'
 
 <EtymosCanvas/>
 
@@ -45,7 +48,7 @@ import ImageSlice from '@components/ImageSlice.astro'
 
 </TextSlice>
 
-<TextSlice background='base03'>
+<TextSlice alt-bg>
 
   For example, a coworker said he was struggling to build a grid layout with the current tools (*flex-box* had just launched), and every css library limited him on having a single fixed gutter width — percentage or pixels — on every breakpoint.
 
@@ -78,7 +81,7 @@ import ImageSlice from '@components/ImageSlice.astro'
 
 </TextSlice>
 
-<TextSlice data-theme='dark' background='base03'>
+<TextSlice theme='dark' alt-bg>
 
   ## Fast forward some years, and we have landed into the train of **JS**: Single Page Applications now reign and, of course, *React* and *CSS-in-JS* libraries came along.
 
@@ -92,7 +95,7 @@ import ImageSlice from '@components/ImageSlice.astro'
 
 </TextSlice>
 
-<TextSlice background='base03'>
+<TextSlice alt-bg>
 
   Although the tools have changed and, in a sense, are now much more powerful, some principles we developed and used back then may still be valuable or have new meaning on current workflows.
 
@@ -165,7 +168,7 @@ import ImageSlice from '@components/ImageSlice.astro'
 
 </TextSlice>
 
-<TextSlice data-theme='dark' background='base03'>
+<TextSlice theme='dark' alt-bg>
 
   ## What if virtue lies **between** two vices?
 
@@ -208,12 +211,9 @@ import ImageSlice from '@components/ImageSlice.astro'
 
 </TextSlice>
 
-<ImageSlice caption={
-  <><a href='https://vertbase.com'>vertbase.com</a> project, where I worked with <a href='https://significa.co'>significa</a>, check out their <a href='https://significa.co/showcase/vertbase'>case page</a></>
-}>
-
-  ![vertbase.com](./vertbase.png)
-
+<ImageSlice>
+  <Image alt='vertbase.com' src={vertbaseImage} />
+  <figcaption><a href='https://vertbase.com'>vertbase.com</a> project, where I worked with <a href='https://significa.co'>significa</a>, check out their <a href='https://significa.co/showcase/vertbase'>case page</a></figcaption>
 </ImageSlice>
 
 <TextSlice>
@@ -234,7 +234,7 @@ import ImageSlice from '@components/ImageSlice.astro'
 
 </TextSlice>
 
-<TextSlice background="base03">
+<TextSlice alt-bg>
 
 
   ## Technical bits, or how to make it work

@@ -1,9 +1,9 @@
 ---
-type Props = { src?: string; alt?: string; caption?: string }
-const { src, alt, caption } = Astro.props
+type Props = { caption?: string }
+const { caption } = Astro.props
 ---
 
-<figure class='ImageSlice'>
-	{src && <img src={src} alt={alt} />}
+<figure>
+	<slot />
 	{caption && <figcaption>{caption}</figcaption>}
 </figure>

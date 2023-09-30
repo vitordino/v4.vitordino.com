@@ -1,8 +1,14 @@
 ---
-type Props = { 'data-theme'?: string }
-const theme = Astro.props['data-theme']
+import { cn } from '@utils/cn'
+type Props = { theme?: string; 'alt-bg'?: boolean }
+const { theme } = Astro.props
+
+const className = cn(
+	'text-slice pb-48 pt-32 text-slate-12 bg-slate-1',
+	'[&:nth-child(2n)]:bg-slate-3 dark:[&:nth-child(2n)]:bg-slate-2',
+)
 ---
 
-<section data-theme={theme} class='pb-48 pt-32'>
+<section data-theme={theme} class={className}>
 	<slot />
 </section>

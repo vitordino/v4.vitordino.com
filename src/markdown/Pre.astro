@@ -3,12 +3,12 @@ import Row from '@components/Row.astro'
 import Column from '@components/Column.astro'
 ---
 
-<div class='mb-16 mt-8 max-w-full overflow-x-scroll bg-slate-3 lg:bg-inherit'>
+<div data-theme='dark' class='mb-16 mt-8 max-w-full overflow-x-scroll bg-slate-2 pr-8 lg:bg-inherit xl:pr-0'>
 	<Row container>
 		<Column xs={0} xl={1} />
 		<Column xs={16} lg={14} xl={12}>
 			<pre
-				class='rounded-sm py-8 font-mono text-xl leading-loose lg:bg-slate-3 lg:px-[7.5%] xl:px-[8.675%]'><slot /></pre>
+				class='rounded-md py-8 font-mono text-xl leading-loose md:overflow-x-scroll lg:bg-slate-2 lg:px-[7.5%] xl:px-[8.675%]'><slot /></pre>
 		</Column>
 	</Row>
 	<div></div>

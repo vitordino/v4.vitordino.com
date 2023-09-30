@@ -4,13 +4,15 @@ import Column from '@components/Column.astro'
 import Container from '@components/Container.astro'
 ---
 
-<blockquote class='relative my-8 py-4 font-serif text-xl leading-10 md:text-2xl md:leading-loose'>
-	<slot />
+<blockquote class='relative my-8 font-serif text-xl leading-10 md:text-2xl md:leading-loose lg:py-4'>
+	<div class='ml-8 sm:ml-[6.125%] lg:ml-0'>
+		<slot />
+	</div>
 	<!-- blockquote decoration -->
 	<div class='absolute top-0 h-full w-full'>
 		<Row container class='h-full'>
-			<Column xs={0} lg={1} class='relative' />
-			<Column xs={0} md={1} class='relative'>
+			<Column xs={0} xl={1} />
+			<Column xs={1}>
 				<div class='absolute h-full w-1 self-stretch bg-slate-4'></div>
 			</Column>
 			<Column xs={16} md={14} lg={12} />
