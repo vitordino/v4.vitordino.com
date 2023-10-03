@@ -21,6 +21,15 @@ export default {
 				'span-15': 'span 15 / span 15',
 				'span-16': 'span 16 / span 16',
 			},
+			animation: {
+				breathe: 'breathe 2.5s cubic-bezier(0, 0, 0.2, 1)  infinite',
+			},
+			keyframes: {
+				breathe: {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.25)' },
+				},
+			},
 		},
 	},
 	safelist: [
