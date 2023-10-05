@@ -1,5 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
+import { getImage } from 'astro:assets'
+import { siteUrl } from '@utils/url'
 import Layout from '@components/Layout.astro'
 import ArticleHero from '@components/ArticleHero.astro'
 import P from '@markdown/P.astro'
@@ -34,9 +36,36 @@ const customComponents = {
 	ul: UL,
 	li: LI,
 }
+
+const title = `Vitor Dino — ${entry.data.title}`
+const ogImage = await getImage({ src: entry.data.ogImage, width: 1200 })
+const twitterImage = await getImage({ src: entry.data.twitterImage, width: 1200 })
+
+const layoutProps = {
+	title,
+	description: entry.data.description,
+	openGraph: {
+		basic: {
+			title: entry.data.description,
+			type: 'article',
+			image: entry.data.ogImage ? siteUrl + ogImage.src : undefined,
+		},
+		optional: {
+			locale: 'en_US',
+			siteName: 'vitordino.com',
+		},
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title,
+		description: entry.data.description,
+		image: entry.data.twitterImage ? siteUrl + twitterImage.src : undefined,
+		imageAlt: entry.data.title,
+	},
+}
 ---
 
-<Layout title={entry.data.title}>
+<Layout {...layoutProps}>
 	<ArticleHero {...entry.data} />
 	<Content components={customComponents} />
 </Layout>
