@@ -23,9 +23,17 @@ export type Props = SEOProps
 				return user || media
 			}
 
-			document.documentElement.setAttribute('data-theme', getTheme())
-			document.documentElement.setAttribute('data-grid', localStorage?.getItem?.('grid'))
-			darkMediaQuery.addEventListener('change', () => document.documentElement.setAttribute('data-theme', getTheme()))
+			const getGrid = () => localStorage.getItem('grid')
+
+			const html = document.documentElement
+
+			html.setAttribute('data-theme', getTheme())
+			html.setAttribute('data-grid', getGrid())
+			darkMediaQuery.addEventListener('change', () => html.setAttribute('data-theme', getTheme()))
+			window.addEventListener('storage', (e) => {
+				if (e.key === 'theme') return html.setAttribute('data-theme', getTheme())
+				if (e.key === 'grid') return html.setAttribute('data-grid', getGrid())
+			})
 		</script>
 		<style>
 			html {
