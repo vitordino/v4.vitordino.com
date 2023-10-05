@@ -41,7 +41,7 @@ const customComponents = {
 	<Content components={customComponents} />
 </Layout>
 <style is:global>
-	.slice:nth-child(2n + 1) {
+	.slice:not([data-theme]):nth-of-type(2n) {
 		@apply bg-slate-3 dark:bg-slate-2;
 	}
 </style>
