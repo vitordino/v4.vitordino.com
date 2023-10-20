@@ -1,5 +1,4 @@
 ---
-import Layout from '@components/Layout.astro'
 import Container from '@components/Container.astro'
 import Row from '@components/Row.astro'
 import Column from '@components/Column.astro'
@@ -8,10 +7,15 @@ import EtymosCanvas from '@components/EtymosCanvas.astro'
 type Props = { title?: string; description?: string; tags?: string[]; hero?: { canvas?: string } }
 
 const { title, description, tags, hero } = Astro.props
-const canvasMap = {
+
+const CANVAS_MAP = {
 	etymos: EtymosCanvas,
-}
-const Canvas = canvasMap[hero.canvas]
+} as const
+
+const hasValidCanvasId = (hero?: Props['hero']): hero is { canvas: keyof typeof CANVAS_MAP } =>
+	!!hero?.canvas && hero.canvas in CANVAS_MAP
+
+const Canvas = hasValidCanvasId(hero) && CANVAS_MAP[hero.canvas]
 ---
 
 <div class='relative bg-slate-1 font-serif text-slate-12' data-theme='dark'>
@@ -28,7 +32,7 @@ const Canvas = canvasMap[hero.canvas]
 					!!tags?.length && (
 						<ul class='mb-6 mt-8 flex gap-12 text-slate-10 md:mt-16'>
 							{tags.map((tag) => (
-								<li key={tag}>{tag}</li>
+								<li>{tag}</li>
 							))}
 						</ul>
 					)
