@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content'
 import Layout from '@components/Layout.astro'
 import HomeSection from '@components/HomeSection.astro'
-import Container from '@components/Container.astro'
 
 const writing = await getCollection('writing')
 const experience = await getCollection('experience')
@@ -10,13 +9,11 @@ const experience = await getCollection('experience')
 
 <Layout title='Vitor Dino'>
 	<main>
-		<Container class='relative'>
-			<HomeSection title='writing'>
-				<pre>{JSON.stringify({ writing }, null, 2)}</pre>
-			</HomeSection>
-			<HomeSection title='experience'>
-				<pre>{JSON.stringify({ experience }, null, 2)}</pre>
-			</HomeSection>
-		</Container>
+		<HomeSection title='writing'>
+			<pre>{JSON.stringify({ writing }, null, 2)}</pre>
+		</HomeSection>
+		<HomeSection title='experience'>
+			<pre>{JSON.stringify({ experience }, null, 2)}</pre>
+		</HomeSection>
 	</main>
 </Layout>
