@@ -2,11 +2,10 @@
 import { cn } from '@utils/cn'
 import tailwindConfig from '../../tailwind.config.ts'
 
-type Breakpoints = 'xs' | keyof typeof tailwindConfig.theme.screens
+type Breakpoints = 'xs' | Exclude<keyof typeof tailwindConfig.theme.screens, '2xl'> | 'xxl'
 type BreakpointProps = Partial<Record<Breakpoints, number>>
 type Props = { class?: string; display?: 'block' | 'flex' | 'grid' } & BreakpointProps
-const { xs, sm, md, lg, xl, display = 'block' } = Astro.props
-const xxl = Astro.props['2xl']
+const { xs, sm, md, lg, xl, xxl, display = 'block' } = Astro.props
 
 const className = cn(
 	Astro.props.class,
