@@ -1,7 +1,12 @@
 ---
+import { getCollection } from 'astro:content'
 import Layout from '@components/Layout.astro'
+
+const writing = await getCollection('writing')
+const experience = await getCollection('experience')
 ---
 
 <Layout title='Vitor Dino'>
 	<main>hello</main>
+	<pre>{JSON.stringify({ writing, experience }, null, 2)}</pre>
 </Layout>
