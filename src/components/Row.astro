@@ -1,8 +1,12 @@
 ---
 import { cn } from '@utils/cn'
 import Container from '@components/Container.astro'
-export type Props = { class?: string; container?: boolean; as?: string }
-const className = cn('grid-cols-16 grid gap-4 sm:gap-6 md:gap-8', Astro.props.class)
+export type Props = { class?: string; container?: boolean; as?: string; verticalGutter?: boolean }
+const className = cn(
+	'grid-cols-16 grid',
+	Astro.props.verticalGutter ? 'gap-4 sm:gap-6 md:gap-8' : 'gap-x-4 sm:gap-x-6 md:gap-x-8',
+	Astro.props.class,
+)
 const { container, as: Element = 'div' } = Astro.props
 ---
 
