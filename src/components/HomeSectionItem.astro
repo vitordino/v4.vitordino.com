@@ -1,12 +1,16 @@
 ---
 export type Props = { href?: string; title?: string; right?: string; description?: string }
 const { href, title, right, description } = Astro.props
+const isExternal = href && !href.startsWith('/')
+const target = isExternal ? '_blank' : undefined
 ---
 
-<a class='mb-16 block' href={href}>
-	<div class='flex justify-between'>
-		{title && <h3 class='font-medium text-slate-12'>{title}</h3>}
-		{right && <div class='text-slate-8'>{right}</div>}
-	</div>
-	{description && <p class='mt-2 text-slate-10'>{description}</p>}
-</a>
+<li>
+	<a class='mb-12 block' href={href} target={target}>
+		<div class='flex justify-between'>
+			{title && <h3 class='font-medium text-slate-12'>{title}</h3>}
+			{right && <div class='text-slate-8'>{right}</div>}
+		</div>
+		{description && <p class='mt-2 max-w-[28em] text-slate-10'>{description}</p>}
+	</a>
+</li>
