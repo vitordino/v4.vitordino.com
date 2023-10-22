@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content'
 import { sortCollectionItems } from '@utils/content'
 import Layout from '@components/Layout.astro'
+import HomeHero from '@components/HomeHero.astro'
 import HomeSection from '@components/HomeSection.astro'
 import HomeSectionItem from '@components/HomeSectionItem.astro'
 
@@ -11,6 +12,7 @@ const experience = await getCollection('experience')
 
 <Layout title='Vitor Dino'>
 	<main>
+		<HomeHero />
 		<HomeSection title='writing'>
 			{
 				sortCollectionItems(writing).map(({ slug, data }) => (
