@@ -13,6 +13,7 @@ import HR from '@components/markdown/HR.astro'
 import OL from '@components/markdown/OL.astro'
 import UL from '@components/markdown/UL.astro'
 import LI from '@components/markdown/LI.astro'
+import Code from '@components/markdown/Code.astro'
 
 export const getStaticPaths = async () => {
 	const writingEntries = await getCollection('writing')
@@ -35,6 +36,7 @@ const customComponents = {
 	ol: OL,
 	ul: UL,
 	li: LI,
+	code: Code,
 }
 
 const title = `Vitor Dino — ${entry.data.title}`
