@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content'
 import Layout from '@components/Layout.astro'
 import HomeSection from '@components/HomeSection.astro'
+import HomeSectionItem from '@components/HomeSectionItem.astro'
 
 const writing = await getCollection('writing')
 const experience = await getCollection('experience')
@@ -10,10 +11,22 @@ const experience = await getCollection('experience')
 <Layout title='Vitor Dino'>
 	<main>
 		<HomeSection title='writing'>
-			<pre>{JSON.stringify({ writing }, null, 2)}</pre>
+			{
+				writing.map(({ data }) => (
+					<HomeSectionItem
+						title={data.title}
+						description={data.description}
+						right={data.date.getUTCFullYear().toString()}
+					/>
+				))
+			}
 		</HomeSection>
 		<HomeSection title='experience'>
-			<pre>{JSON.stringify({ experience }, null, 2)}</pre>
+			{
+				experience.map(({ data }) => (
+					<HomeSectionItem title={data.title} description={data.description} right={data.dateRange} />
+				))
+			}
 		</HomeSection>
 	</main>
 </Layout>
