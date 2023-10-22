@@ -1,4 +1,5 @@
 ---
+import type { Props as SEOProps } from 'astro-seo'
 import { getCollection } from 'astro:content'
 import { getImage } from 'astro:assets'
 import { siteUrl } from '@utils/url'
@@ -43,27 +44,36 @@ const title = `Vitor Dino — ${entry.data.title}`
 const ogImage = await getImage({ src: entry.data.ogImage, width: 1200 })
 const twitterImage = await getImage({ src: entry.data.twitterImage, width: 1200 })
 
-const layoutProps = {
+const ogImageSrc = entry.data.ogImage ? siteUrl + ogImage.src : undefined
+const twitterImageSrc = entry.data.twitterImage ? siteUrl + twitterImage.src : undefined
+
+const openGraph: SEOProps['openGraph'] = ogImageSrc
+	? {
+			basic: {
+				title: entry.data.description,
+				type: 'article',
+				image: ogImageSrc,
+			},
+			optional: {
+				locale: 'en_US',
+				siteName: 'vitordino.com',
+			},
+	  }
+	: undefined
+
+const twitter: SEOProps['twitter'] = {
+	card: 'summary_large_image',
 	title,
 	description: entry.data.description,
-	openGraph: {
-		basic: {
-			title: entry.data.description,
-			type: 'article',
-			image: entry.data.ogImage ? siteUrl + ogImage.src : undefined,
-		},
-		optional: {
-			locale: 'en_US',
-			siteName: 'vitordino.com',
-		},
-	},
-	twitter: {
-		card: 'summary_large_image',
-		title,
-		description: entry.data.description,
-		image: entry.data.twitterImage ? siteUrl + twitterImage.src : undefined,
-		imageAlt: entry.data.title,
-	},
+	image: twitterImageSrc,
+	imageAlt: entry.data.title,
+}
+
+const layoutProps: SEOProps = {
+	title,
+	description: entry.data.description,
+	openGraph,
+	twitter,
 }
 ---
 

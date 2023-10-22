@@ -70,7 +70,7 @@
 		})
 
 	const draw =
-		(ctx: CanvasRenderingContext2D) =>
+		(ctx: CanvasRenderingContext2D | null) =>
 		({ width = 0, height = 0, mouseX = 0, mouseY = 0 }) => {
 			if (!ctx) return
 
@@ -97,10 +97,9 @@
 
 		const handler: ProxyHandler<typeof params> = {
 			set: (obj, prop: keyof typeof obj, value) => {
-				if (obj[prop] !== value) {
-					obj[prop] = value
-					requestAnimationFrame(() => draw(ctx)({ ...obj, [prop]: value }))
-				}
+				if (!ctx) return obj[prop] === value
+				obj[prop] = value
+				requestAnimationFrame(() => draw(ctx)({ ...obj, [prop]: value }))
 				return true
 			},
 		}
@@ -112,7 +111,7 @@
 			canvas.height = height * ratio
 			canvas.style.width = width + 'px'
 			canvas.style.height = height + 'px'
-			ctx.scale(ratio, ratio)
+			ctx?.scale(ratio, ratio)
 		}
 
 		const updateRectProxy = ({
