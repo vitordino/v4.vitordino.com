@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
+import { sortCollectionItems } from '@utils/content'
 import Layout from '@components/Layout.astro'
 import HomeSection from '@components/HomeSection.astro'
 import HomeSectionItem from '@components/HomeSectionItem.astro'
@@ -12,8 +13,9 @@ const experience = await getCollection('experience')
 	<main>
 		<HomeSection title='writing'>
 			{
-				writing.map(({ data }) => (
+				sortCollectionItems(writing).map(({ slug, data }) => (
 					<HomeSectionItem
+						href={`/writing/${slug}`}
 						title={data.title}
 						description={data.description}
 						right={data.date.getUTCFullYear().toString()}
@@ -23,8 +25,8 @@ const experience = await getCollection('experience')
 		</HomeSection>
 		<HomeSection title='experience'>
 			{
-				experience.map(({ data }) => (
-					<HomeSectionItem title={data.title} description={data.description} right={data.dateRange} />
+				sortCollectionItems(experience).map(({ data }) => (
+					<HomeSectionItem href={data.to} title={data.title} description={data.description} right={data.dateRange} />
 				))
 			}
 		</HomeSection>
