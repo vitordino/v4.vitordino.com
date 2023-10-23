@@ -37,7 +37,6 @@
 	const grid = ({ ctx, size, width, height, color, space, padding }: GridProps) => {
 		const c = range(Math.floor(width / space) - padding)
 		const l = range(Math.floor(height / space) - padding)
-
 		return c
 			.flatMap((i) =>
 				l.map((j) => ({
@@ -79,7 +78,7 @@
 			ripples({ ctx, width, height, mouseX, mouseY, size: 24, count: 24 })
 		}
 
-	document.querySelectorAll<HTMLDivElement>('[data-etymos-hero]').forEach((div) => {
+	const setup = (div: HTMLDivElement) => {
 		const canvas = document.createElement('canvas')
 		div.appendChild(canvas)
 		const ctx = canvas.getContext('2d')
@@ -154,7 +153,9 @@
 
 		resize()
 		draw(ctx)(proxy)
-	})
+	}
+
+	document.querySelectorAll<HTMLDivElement>('[data-etymos-hero]').forEach(setup)
 </script>
 
 <div data-etymos-hero class={Astro.props.class}></div>
