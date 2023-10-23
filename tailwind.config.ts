@@ -11,7 +11,7 @@ export default {
 		...defaultTheme,
 		extend: {
 			fontFamily: {
-				serif: ['Tiempos Text', ...defaultTheme.fontFamily.serif],
+				serif: ['Redaction', ...defaultTheme.fontFamily.serif],
 			},
 			gridTemplateColumns: { '16': 'repeat(16, minmax(0, 1fr))' },
 			gridColumn: {
