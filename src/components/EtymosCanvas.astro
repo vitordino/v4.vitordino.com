@@ -77,7 +77,7 @@
 			if (!ctx) return
 			ctx.clearRect(0, 0, width, height)
 			grid({ ctx, width, height, color: '#2C2C2C', space: 24, size: 1, padding: 1 })
-			ripples({ ctx, width, height, mouseX, mouseY, size: 24, count: 24 })
+			ripples({ ctx, width, height, mouseX, mouseY, size: 16, count: 32 })
 		}
 
 	document.querySelectorAll<HTMLDivElement>('[data-etymos-canvas]').forEach(setup(draw))

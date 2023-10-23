@@ -9,7 +9,7 @@ type DrawParams = {
 
 export type CanvasDraw = (ctx: CanvasRenderingContext2D) => (params: DrawParams) => void
 export type CanvasSetup = (draw: CanvasDraw) => (div: HTMLDivElement) => void
-export const setup: CanvasSetup = (draw) => (div) => {
+export const setup: CanvasSetup = draw => div => {
 	const canvas = document.createElement('canvas')
 	div.appendChild(canvas)
 	const ctx = canvas.getContext('2d')
@@ -40,8 +40,8 @@ export const setup: CanvasSetup = (draw) => (div) => {
 	const setRetina = ({ width, height, ratio }: { width: number; height: number; ratio: number }) => {
 		canvas.width = width * ratio
 		canvas.height = height * ratio
-		canvas.style.width = width + 'px'
-		canvas.style.height = height + 'px'
+		canvas.style.width = Math.floor(width) + 'px'
+		canvas.style.height = Math.floor(height) + 'px'
 		ctx?.scale(ratio, ratio)
 	}
 

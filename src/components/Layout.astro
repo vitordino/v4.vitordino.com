@@ -31,7 +31,7 @@ export type Props = SEOProps
 			html.setAttribute('data-theme', getTheme())
 			html.setAttribute('data-grid', getGrid())
 			darkMediaQuery.addEventListener('change', () => html.setAttribute('data-theme', getTheme()))
-			window.addEventListener('storage', (e) => {
+			window.addEventListener('storage', e => {
 				if (e.key === 'theme') return html.setAttribute('data-theme', getTheme())
 				if (e.key === 'grid') return html.setAttribute('data-grid', getGrid())
 			})
@@ -86,6 +86,10 @@ export type Props = SEOProps
 					url('/fonts/tiempos-text/TiemposText-SemiboldItalic.ttf') format('truetype');
 				font-style: italic;
 				font-weight: 500;
+			}
+			*::selection {
+				background: hsl(var(--slate12) / 1);
+				color: hsl(var(--slate12) / 1);
 			}
 		</style>
 	</head>
