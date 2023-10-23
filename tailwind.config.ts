@@ -12,6 +12,7 @@ export default {
 		extend: {
 			fontFamily: {
 				serif: ['Redaction', ...defaultTheme.fontFamily.serif],
+				serif35: ['Redaction35', ...defaultTheme.fontFamily.serif],
 			},
 			gridTemplateColumns: { '16': 'repeat(16, minmax(0, 1fr))' },
 			gridColumn: {

@@ -18,19 +18,19 @@ const hasValidCanvasId = (hero?: Props['hero']): hero is { canvas: keyof typeof 
 const Canvas = hasValidCanvasId(hero) && CANVAS_MAP[hero.canvas]
 ---
 
-<div class='relative bg-slate-1 font-serif text-slate-12' data-theme='dark'>
+<div class='relative bg-slate-1 text-slate-12' data-theme='dark'>
 	{Canvas && <Canvas class='absolute h-full w-full' />}
 	<Container class='relative pt-16 md:pt-24 lg:pt-32'>
 		<Row>
 			<Column xs={0} lg={1} xl={2} />
 			<Column xs={16} md={10} lg={8} xl={6}>
-				<h1 class='font-sans text-5xl font-bold lowercase leading-tight tracking-tight'>{title}</h1>
-				<h2 class='mt-4 text-2xl lowercase leading-relaxed'>{description}</h2>
+				<h1 class='text-5xl font-bold lowercase leading-tight tracking-tight'>{title}</h1>
+				<h2 class='mt-4 font-serif text-2xl lowercase leading-relaxed text-slate-11'>{description}</h2>
 
 				<div class='pt-16 md:pt-24 lg:pt-32'></div>
 				{
 					!!tags?.length && (
-						<ul class='mb-6 mt-8 flex gap-12 text-slate-10 md:mt-16'>
+						<ul class='mb-6 mt-8 flex gap-12 text-xs font-semibold uppercase tracking-wider text-slate-11 md:mt-16'>
 							{tags.map(tag => (
 								<li>{tag}</li>
 							))}

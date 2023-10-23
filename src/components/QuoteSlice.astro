@@ -5,7 +5,7 @@ type Props = { author?: string }
 const { author } = Astro.props
 ---
 
-<section class='slice quote-slice'>
+<section class='slice quote-slice font-serif35'>
 	<blockquote class='relative pb-48 pt-32'>
 		<!-- quote slice decoration -->
 		<div>
@@ -13,7 +13,7 @@ const { author } = Astro.props
 				<Column xs={0} xl={1} />
 				<Column xs={1}>
 					<div
-						class='relative font-serif text-7xl font-black leading-8 text-slate-6 before:block before:content-["“"] lg:absolute lg:-translate-y-1/4 lg:text-8xl'
+						class='relative text-7xl font-black leading-8 text-slate-6 before:block before:content-["“"] lg:absolute lg:-translate-y-1/4 lg:text-8xl'
 					>
 					</div>
 				</Column>
@@ -35,6 +35,6 @@ const { author } = Astro.props
 
 <style is:global>
 	.quote-slice p {
-		@apply text-2xl font-extrabold leading-9 sm:text-4xl sm:leading-snug md:text-5xl md:leading-[4rem];
+		@apply font-serif35 text-2xl font-extrabold leading-9 sm:text-4xl sm:leading-snug md:text-5xl md:leading-[4rem];
 	}
 </style>
