@@ -1,5 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
+import type { Props as SEOProps } from 'astro-seo'
+import { siteUrl } from '@utils/url'
 import { sortCollectionItems } from '@utils/content'
 import Layout from '@components/Layout.astro'
 import HomeHero from '@components/HomeHero.astro'
@@ -8,9 +10,32 @@ import HomeSectionItem from '@components/HomeSectionItem.astro'
 
 const writing = await getCollection('writing')
 const experience = await getCollection('experience')
+
+const seo: SEOProps = {
+	title: 'Vitor Dino',
+	description: 'frontend developer & interaction designer',
+	openGraph: {
+		basic: {
+			title: 'frontend developer & interaction designer',
+			type: 'article',
+			image: siteUrl + 'og.png',
+		},
+		optional: {
+			locale: 'en_US',
+			siteName: 'vitordino.com',
+		},
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: 'Vitor Dino',
+		description: 'frontend developer & interaction designer',
+		image: siteUrl + 'twitter.png',
+		imageAlt: 'Vitor Dino',
+	},
+}
 ---
 
-<Layout title='Vitor Dino'>
+<Layout {...seo}>
 	<main>
 		<HomeHero />
 		<HomeSection title='writing'>
