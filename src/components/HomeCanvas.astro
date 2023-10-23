@@ -1,4 +1,4 @@
-<div data-home-canvas id='sketch' class='absolute bottom-0 left-0 right-0 top-0'></div>
+<div data-home-canvas class='absolute bottom-0 left-0 right-0 top-0'></div>
 <script>
 	import type { CanvasDraw } from '@utils/canvas'
 	import { setup } from '@utils/canvas'
@@ -21,7 +21,7 @@
 		const { width, height, mouseX, mouseY } = params
 		if (!ctx) return
 		ctx.fillStyle = 'transparent'
-		ctx.strokeStyle = '#66666666'
+		ctx.strokeStyle = '#66666625'
 		ctx.clearRect(0, 0, width, height)
 
 		const grid: Grid = []
