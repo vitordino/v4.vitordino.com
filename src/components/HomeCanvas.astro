@@ -1,116 +1,45 @@
 <div data-home-canvas id='sketch' class='absolute bottom-0 left-0 right-0 top-0'></div>
 <script>
+	import type { CanvasDraw } from '@utils/canvas'
+	import { setup } from '@utils/canvas'
+
 	type Point = [x: number, y: number]
 	type Grid = Point[]
+
 	const SIZE = 16
 	const LENGTH = 12
-	const line = (ctx: CanvasRenderingContext2D) => (x1: number, y1: number, x2: number, y2: number) => {
+
+	type Line = (ctx: CanvasRenderingContext2D) => (x1: number, y1: number, x2: number, y2: number) => void
+	const line: Line = ctx => (x1, y1, x2, y2) => {
 		ctx.beginPath()
 		ctx.moveTo(x1, y1)
 		ctx.lineTo(x2, y2)
 		ctx.stroke()
 	}
 
-	const setup = (div: HTMLDivElement) => {
-		const canvas = document.createElement('canvas')
-		div.appendChild(canvas)
-		const ctx = canvas.getContext('2d')
+	const draw: CanvasDraw = ctx => params => {
+		const { width, height, mouseX, mouseY } = params
+		if (!ctx) return
+		ctx.fillStyle = 'transparent'
+		ctx.strokeStyle = '#66666666'
+		ctx.clearRect(0, 0, width, height)
 
-		const rect = div.getBoundingClientRect()
-		// proxyfied for updating
-		const params = {
-			width: rect.width,
-			height: rect.height,
-			left: rect.left,
-			top: rect.top,
-			mouseX: rect.width / 2,
-			mouseY: rect.height / 2,
+		const grid: Grid = []
+		const countX = Math.floor(width / SIZE)
+		const countY = Math.floor(height / SIZE)
+		for (let j = 1; j < countY; j++) {
+			for (let i = 1; i < countX; i++) {
+				grid.push([i * SIZE, j * SIZE])
+			}
 		}
 
-		const handler: ProxyHandler<typeof params> = {
-			set: (obj, prop: keyof typeof obj, value) => {
-				if (!ctx) return obj[prop] === value
-				obj[prop] = value
-				requestAnimationFrame(() => draw(ctx)({ ...obj, [prop]: value }))
-				return true
-			},
-		}
-
-		const proxy = new Proxy(params, handler)
-
-		const setRetina = ({ width, height, ratio }: { width: number; height: number; ratio: number }) => {
-			canvas.width = width * ratio
-			canvas.height = height * ratio
-			canvas.style.width = width + 'px'
-			canvas.style.height = height + 'px'
-			ctx?.scale(ratio, ratio)
-		}
-
-		const updateRectProxy = ({
-			width,
-			height,
-			left,
-			top,
-		}: {
-			width: number
-			height: number
-			left: number
-			top: number
-		}) => {
-			proxy.width = width
-			proxy.height = height
-			proxy.left = left
-			proxy.top = top
-		}
-
-		const scroll = () => {
-			const { width, height, left, top } = div.getBoundingClientRect()
-			updateRectProxy({ width, height, left, top })
-		}
-
-		window.addEventListener('scroll', scroll)
-
-		const resize = () => {
-			const { width, height, left, top } = div.getBoundingClientRect()
-			setRetina({ width, height, ratio: window.devicePixelRatio })
-			updateRectProxy({ width, height, left, top })
-		}
-
-		window.addEventListener('resize', resize)
-
-		const mouseMove = (e: MouseEvent) => {
-			proxy.mouseX = e.clientX - proxy.left
-			proxy.mouseY = e.clientY - proxy.top
-		}
-		window.addEventListener('mousemove', mouseMove)
-		resize()
-		draw(ctx)(proxy)
+		grid.forEach(([x, y]) => {
+			if (x === undefined || y === undefined) return
+			const [dx, dy] = [x - mouseX, y - mouseY]
+			const h = Math.atan2(-dx - dy, dy - dx)
+			line(ctx)(x, y, x + LENGTH * Math.cos(h), y + LENGTH * Math.sin(h))
+		})
 	}
 
-	const draw =
-		(ctx: CanvasRenderingContext2D | null) =>
-		({ width = 0, height = 0, mouseX = 0, mouseY = 0 }) => {
-			if (!ctx) return
-			ctx.fillStyle = 'transparent'
-			ctx.strokeStyle = '#66666666'
-			ctx.clearRect(0, 0, width, height)
-
-			const grid: Grid = []
-			const countX = Math.floor(width / SIZE)
-			const countY = Math.floor(height / SIZE)
-			for (let j = 1; j < countY; j++) {
-				for (let i = 1; i < countX; i++) {
-					grid.push([i * SIZE, j * SIZE])
-				}
-			}
-
-			grid.forEach(([x, y]) => {
-				if (x === undefined || y === undefined) return
-				const [dx, dy] = [x - mouseX, y - mouseY]
-				const h = Math.atan2(-dx - dy, dy - dx)
-				line(ctx)(x, y, x + LENGTH * Math.cos(h), y + LENGTH * Math.sin(h))
-			})
-		}
-
-	document.querySelectorAll<HTMLDivElement>('[data-home-canvas]').forEach(setup)
+	document.querySelectorAll<HTMLDivElement>('[data-home-canvas]').forEach(setup(draw))
 </script>
