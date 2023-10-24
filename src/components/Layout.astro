@@ -2,6 +2,7 @@
 import { SEO } from 'astro-seo'
 import type { Props as SEOProps } from 'astro-seo'
 import Logo from '@components/Logo.astro'
+import PhotoLogo from './PhotoLogo.astro'
 import GridOverlay from '@components/GridOverlay.astro'
 import ThemeSwitcher from '@components/ThemeSwitcher.astro'
 
@@ -90,6 +91,7 @@ export type Props = SEOProps
 	</head>
 	<body>
 		<Logo />
+		<PhotoLogo />
 		<slot />
 		<GridOverlay />
 		<ThemeSwitcher />
