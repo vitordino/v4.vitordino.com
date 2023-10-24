@@ -33,12 +33,13 @@ const { title } = Astro.props
 	</Row>
 </section>
 <script>
+	const isMobile = 'ontouchend' in document
 	const update = (element: HTMLHeadingElement, initialY: number) => {
 		if (window.innerWidth >= 1024) {
 			element.style.transform = `translateX(0px)`
 			return
 		}
-		const y = initialY - scrollY
+		const y = isMobile ? initialY - scrollY : element.getBoundingClientRect().y
 		if (window.innerWidth >= 768) {
 			const x = Math.min(Math.max(-y + 48, 0), 16)
 			element.style.transform = `translateX(${x}px)`
