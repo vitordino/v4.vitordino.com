@@ -1,7 +1,4 @@
 ---
-type Props = { caption?: string }
-const { caption } = Astro.props
-
 import Container from '@components/Container.astro'
 ---
 
@@ -12,10 +9,11 @@ import Container from '@components/Container.astro'
 			<figcaption><slot name='caption' /></figcaption>
 		</Container>
 	</figure>
-<section>
-
-<style is:global>
-	.image-slice a {
-		text-decoration: underline;
-	}
-</style>
+	<section>
+		<style is:global>
+			.image-slice a {
+				@apply underline decoration-slate-7 outline-none hover:decoration-slate-11 focus:decoration-slate-11 focus-visible:decoration-slate-11 focus-visible:decoration-2 active:decoration-slate-12;
+			}
+		</style>
+	</section>
+</section>
