@@ -18,7 +18,7 @@ import Code from '@components/markdown/Code.astro'
 
 export const getStaticPaths = async () => {
 	const writingEntries = await getCollection('writing')
-	return writingEntries.map((entry) => ({
+	return writingEntries.map(entry => ({
 		params: { slug: entry.slug },
 		props: { entry },
 	}))
@@ -41,11 +41,9 @@ const customComponents = {
 }
 
 const title = `Vitor Dino — ${entry.data.title}`
-const ogImage = await getImage({ src: entry.data.ogImage, width: 1200 })
-const twitterImage = await getImage({ src: entry.data.twitterImage, width: 1200 })
 
-const ogImageSrc = entry.data.ogImage ? siteUrl + ogImage.src : undefined
-const twitterImageSrc = entry.data.twitterImage ? siteUrl + twitterImage.src : undefined
+const ogImageSrc = entry.data.ogImage ? `${siteUrl}${entry.data.ogImage}` : undefined
+const twitterImageSrc = entry.data.twitterImage ? `${siteUrl}${entry.data.twitterImage}` : undefined
 
 const openGraph: SEOProps['openGraph'] = ogImageSrc
 	? {
@@ -61,13 +59,15 @@ const openGraph: SEOProps['openGraph'] = ogImageSrc
 	  }
 	: undefined
 
-const twitter: SEOProps['twitter'] = {
-	card: 'summary_large_image',
-	title,
-	description: entry.data.description,
-	image: twitterImageSrc,
-	imageAlt: entry.data.title,
-}
+const twitter: SEOProps['twitter'] = twitterImageSrc
+	? {
+			card: 'summary_large_image',
+			title,
+			description: entry.data.description,
+			image: twitterImageSrc,
+			imageAlt: entry.data.title,
+	  }
+	: undefined
 
 const layoutProps: SEOProps = {
 	title,
