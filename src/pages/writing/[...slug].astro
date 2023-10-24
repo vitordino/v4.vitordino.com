@@ -77,7 +77,7 @@ const layoutProps: SEOProps = {
 ---
 
 <Layout {...layoutProps}>
-	<main>
+	<main class='writing-article'>
 		<ArticleHero {...entry.data} />
 		<Content components={customComponents} />
 	</main>
@@ -85,5 +85,11 @@ const layoutProps: SEOProps = {
 <style is:global>
 	.slice:not([data-theme]):nth-of-type(2n) {
 		@apply bg-slate-3 dark:bg-slate-2;
+	}
+	.writing-article a {
+		@apply outline-none;
+	}
+	.writing-article a:focus-visible {
+		@apply text-tomato-11 decoration-[3];
 	}
 </style>
