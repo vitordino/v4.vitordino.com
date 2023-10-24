@@ -12,8 +12,8 @@ type MouseParams = {
 
 type DrawParams = RectParams & MouseParams
 
-type Listener = 'resize' | 'scroll' | 'mousemove'
-const DEFAULT_LISTENERS: Listener[] = ['resize', 'scroll', 'mousemove']
+export type Listener = 'resize' | 'scroll' | 'mousemove'
+export const DEFAULT_LISTENERS: Listener[] = ['resize', 'scroll', 'mousemove']
 
 export type CanvasDraw = (ctx: CanvasRenderingContext2D) => (params: DrawParams) => void
 export type CanvasSetup = (draw: CanvasDraw, listeners?: Listener[]) => (div: HTMLDivElement) => void

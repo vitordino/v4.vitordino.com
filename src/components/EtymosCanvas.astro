@@ -38,13 +38,15 @@
 		padding: number
 	}
 	const grid = ({ ctx, size, width, height, color, space, padding }: GridProps) => {
+		const offsetX = (width % space) / 2
+		const offsetY = (height % space) / 2
 		const c = range(Math.floor(width / space) - padding)
 		const l = range(Math.floor(height / space) - padding)
 		return c
 			.flatMap(i =>
 				l.map(j => ({
-					x: (i + padding) * space,
-					y: (j + padding) * space,
+					x: (i + padding) * space + offsetX,
+					y: (j + padding) * space + offsetY,
 				})),
 			)
 			.forEach(({ x, y }) => circle({ ctx, size, fill: color, x, y }))
@@ -76,7 +78,7 @@
 		({ width, height, mouseX, mouseY }) => {
 			if (!ctx) return
 			ctx.clearRect(0, 0, width, height)
-			grid({ ctx, width, height, color: '#2C2C2C', space: 24, size: 1, padding: 1 })
+			grid({ ctx, width, height, color: '#2C2C2C', space: 16, size: 1, padding: 1 })
 			ripples({ ctx, width, height, mouseX, mouseY, size: 16, count: 32 })
 		}
 

@@ -1,6 +1,6 @@
 <div data-home-canvas class='absolute bottom-0 left-0 right-0 top-0'></div>
 <script>
-	import type { CanvasDraw } from '@utils/canvas'
+	import type { CanvasDraw, Listener } from '@utils/canvas'
 	import { setup } from '@utils/canvas'
 
 	type Point = [x: number, y: number]
@@ -44,6 +44,6 @@
 	}
 
 	// don’t update on scroll as the parent is `position: fixed`
-	const listeners = ['mousemove', 'resize']
+	const listeners: Listener[] = ['mousemove', 'resize']
 	document.querySelectorAll<HTMLDivElement>('[data-home-canvas]').forEach(setup(draw, listeners))
 </script>
