@@ -1,0 +1,13 @@
+---
+import { getCanvas } from '@utils/articleCanvas'
+
+type Props = { class?: string; canvas?: string }
+
+const { canvas } = Astro.props
+
+const Canvas = getCanvas(canvas)
+---
+
+<>
+	{Canvas && <Canvas class={Astro.props.class} />}
+</>
