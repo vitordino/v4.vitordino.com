@@ -41,5 +41,7 @@
 		})
 	}
 
-	document.querySelectorAll<HTMLDivElement>('[data-home-canvas]').forEach(setup(draw))
+	// don’t update on scroll as the parent is `position: fixed`
+	const listeners = ['mousemove', 'resize']
+	document.querySelectorAll<HTMLDivElement>('[data-home-canvas]').forEach(setup(draw, listeners))
 </script>
