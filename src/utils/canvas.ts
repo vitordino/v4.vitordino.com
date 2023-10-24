@@ -1,11 +1,16 @@
-type DrawParams = {
+type RectParams = {
 	width: number
 	height: number
 	left: number
 	top: number
+}
+
+type MouseParams = {
 	mouseX: number
 	mouseY: number
 }
+
+type DrawParams = RectParams & MouseParams
 
 export type CanvasDraw = (ctx: CanvasRenderingContext2D) => (params: DrawParams) => void
 export type CanvasSetup = (draw: CanvasDraw) => (div: HTMLDivElement) => void
@@ -17,7 +22,7 @@ export const setup: CanvasSetup = draw => div => {
 
 	const rect = div.getBoundingClientRect()
 	// proxyfied for updating
-	const params = {
+	const params: DrawParams = {
 		width: rect.width,
 		height: rect.height,
 		left: rect.left,
@@ -26,7 +31,7 @@ export const setup: CanvasSetup = draw => div => {
 		mouseY: rect.height / 2,
 	}
 
-	const handler: ProxyHandler<typeof params> = {
+	const handler: ProxyHandler<DrawParams> = {
 		set: (obj, prop: keyof typeof obj, value) => {
 			if (!ctx) return obj[prop] === value
 			obj[prop] = value
@@ -45,28 +50,14 @@ export const setup: CanvasSetup = draw => div => {
 		ctx?.scale(ratio, ratio)
 	}
 
-	const updateRectProxy = ({
-		width,
-		height,
-		left,
-		top,
-	}: {
-		width: number
-		height: number
-		left: number
-		top: number
-	}) => {
+	const updateRectProxy = ({ width, height, left, top }: RectParams) => {
 		proxy.width = width
 		proxy.height = height
 		proxy.left = left
 		proxy.top = top
 	}
 
-	const scroll = () => {
-		const { width, height, left, top } = div.getBoundingClientRect()
-		updateRectProxy({ width, height, left, top })
-	}
-
+	const scroll = () => updateRectProxy(div.getBoundingClientRect())
 	window.addEventListener('scroll', scroll)
 
 	const resize = () => {
