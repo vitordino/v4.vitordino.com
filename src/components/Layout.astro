@@ -36,7 +36,7 @@ export type Props = SEOProps
 				if (e.key === 'grid') return html.setAttribute('data-grid', getGrid())
 			})
 		</script>
-		<style>
+		<style is:global>
 			html {
 				-webkit-font-smoothing: antialiased;
 				font-smoothing: antialiased;
@@ -82,9 +82,9 @@ export type Props = SEOProps
 				src: url('/fonts/redaction/Redaction35-Italic.woff2') format('woff2');
 				font-style: italic;
 			}
-			*::selection {
-				background: hsl(var(--slate12) / 1);
-				color: hsl(var(--slate12) / 1);
+			::selection {
+				background: hsl(var(--slate12) / 1) !important;
+				color: hsl(var(--slate1) / 1) !important;
 			}
 		</style>
 	</head>
