@@ -1,7 +1,6 @@
 ---
 import type { Props as SEOProps } from 'astro-seo'
 import { getCollection } from 'astro:content'
-import { getImage } from 'astro:assets'
 import { siteUrl } from '@utils/url'
 import Layout from '@components/Layout.astro'
 import ArticleHero from '@components/ArticleHero.astro'
@@ -78,8 +77,10 @@ const layoutProps: SEOProps = {
 ---
 
 <Layout {...layoutProps}>
-	<ArticleHero {...entry.data} />
-	<Content components={customComponents} />
+	<main>
+		<ArticleHero {...entry.data} />
+		<Content components={customComponents} />
+	</main>
 </Layout>
 <style is:global>
 	.slice:not([data-theme]):nth-of-type(2n) {

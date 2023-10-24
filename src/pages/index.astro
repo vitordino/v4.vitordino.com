@@ -36,28 +36,26 @@ const seo: SEOProps = {
 ---
 
 <Layout {...seo}>
-	<main>
-		<HomeHero />
-		<div class='relative bg-slate-1'>
-			<HomeSection title='writing'>
-				{
-					sortCollectionItems(writing).map(({ slug, data }) => (
-						<HomeSectionItem
-							href={`/writing/${slug}`}
-							title={data.title}
-							description={data.description}
-							right={data.date.getUTCFullYear().toString()}
-						/>
-					))
-				}
-			</HomeSection>
-			<HomeSection title='experience'>
-				{
-					sortCollectionItems(experience).map(({ data }) => (
-						<HomeSectionItem href={data.to} title={data.title} description={data.description} right={data.dateRange} />
-					))
-				}
-			</HomeSection>
-		</div>
+	<HomeHero />
+	<main class='relative bg-slate-1'>
+		<HomeSection title='writing'>
+			{
+				sortCollectionItems(writing).map(({ slug, data }) => (
+					<HomeSectionItem
+						href={`/writing/${slug}`}
+						title={data.title}
+						description={data.description}
+						right={data.date.getUTCFullYear().toString()}
+					/>
+				))
+			}
+		</HomeSection>
+		<HomeSection title='experience'>
+			{
+				sortCollectionItems(experience).map(({ data }) => (
+					<HomeSectionItem href={data.to} title={data.title} description={data.description} right={data.dateRange} />
+				))
+			}
+		</HomeSection>
 	</main>
 </Layout>
