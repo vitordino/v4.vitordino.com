@@ -27,9 +27,11 @@
 		const grid: Grid = []
 		const countX = Math.floor(width / SIZE)
 		const countY = Math.floor(height / SIZE)
+		const offsetX = (width % SIZE) / 2
+		const offsetY = (height % SIZE) / 2
 		for (let j = 1; j < countY; j++) {
 			for (let i = 1; i < countX; i++) {
-				grid.push([i * SIZE, j * SIZE])
+				grid.push([i * SIZE + offsetX, j * SIZE + offsetY])
 			}
 		}
 
