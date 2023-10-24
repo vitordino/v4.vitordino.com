@@ -15,7 +15,7 @@ const { title } = Astro.props
 			xl={2}
 			class='sticky top-0 bg-slate-1 lg:relative lg:top-0 lg:border-none lg:bg-transparent lg:pb-4 lg:pt-0'
 		>
-			<h2 class='px-8 py-3 text-slate-9 md:px-4 lg:sticky lg:top-3 lg:mt-3 lg:px-0 lg:py-0 xl:top-4 xl:mt-4'>
+			<h2 data-home-section-title class='py-3 text-slate-9 lg:sticky lg:top-4 lg:mt-4 lg:py-0'>
 				{title}
 			</h2>
 			<div class='-mx-4 border-b border-slate-4 md:-mx-8 lg:hidden'></div>
@@ -28,3 +28,25 @@ const { title } = Astro.props
 		</Column>
 	</Row>
 </section>
+<script>
+	const update = (element: HTMLHeadingElement) => {
+		if (window.innerWidth >= 1024) {
+			element.style.transform = `translate3d(0px, 0, 0)`
+			return
+		}
+		const { y } = element.getBoundingClientRect()
+		if (window.innerWidth >= 768) {
+			const x = Math.min(Math.max(-y + 44, 0), 16)
+			element.style.transform = `translate3d(${x}px, 0, 0)`
+			return
+		}
+		const x = Math.min(Math.max(-y + 44, 0), 28)
+		element.style.transform = `translate3d(${x}px, 0, 0)`
+	}
+	const setup = (element: HTMLHeadingElement) => {
+		const listener = () => update(element)
+		window.addEventListener('scroll', listener)
+		window.addEventListener('resize', listener)
+	}
+	document.querySelectorAll<HTMLHeadingElement>('[data-home-section-title]').forEach(setup)
+</script>
