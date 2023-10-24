@@ -90,14 +90,14 @@ export type Props = SEOProps
 		</style>
 	</head>
 	<body>
-		<header>
+		<header class='print:hidden'>
 			<nav>
 				<Logo />
 				<PhotoLogo />
 			</nav>
 		</header>
 		<slot />
-		<footer>
+		<footer class='print:hidden'>
 			<GridOverlay />
 			<ThemeSwitcher />
 		</footer>

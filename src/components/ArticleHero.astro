@@ -19,7 +19,7 @@ const Canvas = hasValidCanvasId(hero) && CANVAS_MAP[hero.canvas]
 ---
 
 <div class='relative bg-slate-1 text-slate-12' data-theme='dark'>
-	{Canvas && <Canvas class='absolute h-full w-full' />}
+	{Canvas && <Canvas class='absolute h-full w-full print:hidden' />}
 	<Container class='relative pt-24 lg:pt-32'>
 		<Row>
 			<Column xs={0} lg={1} xl={2} />

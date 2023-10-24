@@ -6,19 +6,19 @@ export type Props = { title?: string }
 const { title } = Astro.props
 ---
 
-<section class='relative'>
+<section class='relative break-inside-avoid'>
 	<div class='hidden border-b border-slate-4 bg-slate-1 lg:block'></div>
 	<Row container>
 		<Column
 			xs={16}
 			lg={3}
 			xl={2}
-			class='sticky top-0 bg-slate-1 lg:relative lg:top-0 lg:border-none lg:bg-transparent lg:pb-4 lg:pt-0'
+			class='sticky top-0 bg-slate-1 print:relative lg:relative lg:top-0 lg:border-none lg:bg-transparent lg:pb-4 lg:pt-0'
 		>
 			<h2 data-home-section-title class='py-3 text-slate-9 lg:sticky lg:top-4 lg:mt-4 lg:py-0'>
 				{title}
 			</h2>
-			<div class='-mx-4 border-b border-slate-4 md:-mx-8 lg:hidden'></div>
+			<div class='-mx-4 border-b border-slate-4 print:mx-0 md:-mx-8 lg:hidden'></div>
 		</Column>
 		<Column xs={0} xl={2} xxl={3} />
 		<Column xs={16} lg={12} xl={8} xxl={6} class='pt-10 lg:pt-4'>
