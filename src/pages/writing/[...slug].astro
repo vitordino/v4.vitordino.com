@@ -41,8 +41,8 @@ const customComponents = {
 
 const title = `Vitor Dino — ${entry.data.title}`
 
-const ogImageSrc = entry.data.ogImage ? `${siteUrl}${entry.data.ogImage}` : undefined
-const twitterImageSrc = entry.data.twitterImage ? `${siteUrl}${entry.data.twitterImage}` : undefined
+const ogImageSrc = entry.data.ogImage ? `${siteUrl}/${entry.data.ogImage}` : undefined
+const twitterImageSrc = entry.data.twitterImage ? `${siteUrl}/${entry.data.twitterImage}` : undefined
 
 const openGraph: SEOProps['openGraph'] = ogImageSrc
 	? {
