@@ -20,6 +20,7 @@ const writing = defineCollection({
 		twitterImage: z.string(),
 		tags: z.array(z.string()),
 		hero: z.optional(z.object({ canvas: z.string() })),
+		salt: z.optional(z.boolean()),
 	}),
 })
 // 3. Export a single `collections` object to register your collection(s)

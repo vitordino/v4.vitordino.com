@@ -14,6 +14,7 @@ import OL from '@components/markdown/OL.astro'
 import UL from '@components/markdown/UL.astro'
 import LI from '@components/markdown/LI.astro'
 import Code from '@components/markdown/Code.astro'
+import SaltDisclaimer from '@components/SaltDisclaimer.astro'
 
 export const getStaticPaths = async () => {
 	const writingEntries = await getCollection('writing')
@@ -79,6 +80,9 @@ const layoutProps: SEOProps = {
 <Layout {...layoutProps}>
 	<main class='writing-article'>
 		<ArticleHero {...entry.data} />
+		{entry.data.salt && (
+			<SaltDisclaimer date={entry.data.date} />
+		)}
 		<Content components={customComponents} />
 	</main>
 </Layout>

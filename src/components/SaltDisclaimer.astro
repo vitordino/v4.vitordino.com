@@ -1,0 +1,52 @@
+---
+import Column from '@components/Column.astro'
+import Row from '@components/Row.astro'
+import { getRelativeTimeString } from '@utils/time'
+export type Props = { date?: Date }
+const { date } = Astro.props
+---
+
+<div>
+	<Row container>
+		<Column xs={0} lg={1} />
+		<Column xs={16} lg={14} xl={12}>
+			<div
+				class='relative -mx-4 overflow-hidden border-b border-t border-tomato-6 bg-tomato-1 p-4 pr-16 font-sans md:mx-0 md:mt-6 md:overflow-visible md:rounded-md md:border md:px-6'
+			>
+				{
+					!!date && (
+						<p class='mb-1 text-xs font-semibold uppercase'>
+							Read this with a pinch of salt, this was written
+							<strong class='font-bold'>
+								around
+								<time datetime={date.toISOString()} data-salt-disclaimer-date>
+									{getRelativeTimeString(date)}
+								</time>
+							</strong>
+						</p>
+					)
+				}
+				<p class='font-serif35 text-xl'>My opinions have changed since I’ve wrote this article.</p>
+				<slot />
+				<div
+					class='absolute right-2 top-2 -rotate-[135deg] select-none text-5xl md:-translate-y-1/2 md:translate-x-1/2'
+				>
+					🧂
+				</div>
+			</div>
+		</Column>
+	</Row>
+</div>
+
+<script>
+	import { getRelativeTimeString } from '@utils/time'
+	const setup = (element: HTMLElement) => {
+		try {
+			const dateString = element.getAttribute('datetime')
+			if (!dateString) return
+			const date = new Date(dateString)
+			element.innerText = getRelativeTimeString(date)
+		} catch {}
+	}
+	document.querySelectorAll<HTMLElement>('[data-salt-disclaimer-date]').forEach(setup)
+</script>
