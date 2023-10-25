@@ -1,69 +1,16 @@
 ---
-import Row from './Row.astro'
-import Column from './Column.astro'
-import ArticleCanvas from './ArticleCanvas.astro'
-import { isValidCanvasId } from '@utils/articleCanvas'
-
-export type Props = { href?: string; title?: string; right?: string; description?: string; hero?: { canvas?: string } }
-const { href, title, right, description, hero } = Astro.props
+export type Props = { href?: string; title?: string; right?: string; description?: string }
+const { href, title, right, description } = Astro.props
 const isExternal = href && !href.startsWith('/')
 const target = isExternal ? '_blank' : undefined
 ---
 
 <li>
-	<a
-		class='group relative z-[1] block cursor-pointer break-inside-avoid pb-8 pt-8 outline-none lg:pb-12 lg:pt-4'
-		href={href}
-		target={target}
-		data-home-section-item
-		data-canvas={isValidCanvasId(hero?.canvas).toString()}
-	>
-		<ArticleCanvas
-			{...hero}
-			class='absolute -top-[1px] bottom-0 w-full bg-slate-1 opacity-0 group-hover:opacity-100 group-focus:opacity-100 print:hidden'
-		/>
-		<Row container class='relative'>
-			<Column xs={0} lg={4} xl={4} />
-			<Column xs={16} lg={9} xl={8}>
-				<div class='flex justify-between'>
-					{
-						title && (
-							<h3 class='font-medium text-slate-12 decoration-slate-9 group-hover:underline group-focus-visible:underline'>
-								{title}
-							</h3>
-						)
-					}
-					{right && <div class='text-slate-8'>{right}</div>}
-				</div>
-				{description && <p class='mt-2 max-w-[28em] font-serif text-slate-10'>{description}</p>}
-			</Column>
-		</Row>
+	<a class='group mb-12 block break-inside-avoid outline-none' href={href} target={target}>
+		<div class='flex justify-between'>
+			{title && <h3 class='font-medium text-slate-12 group-focus-visible:underline'>{title}</h3>}
+			{right && <div class='text-slate-8'>{right}</div>}
+		</div>
+		{description && <p class='mt-2 max-w-[28em] font-serif text-slate-10'>{description}</p>}
 	</a>
 </li>
-<script>
-	const setup = (element: HTMLElement) => {
-		if (element.getAttribute('data-canvas') !== 'true') return
-		let reasons = 0
-
-		const update = () => {
-			if (!reasons) return element.removeAttribute('data-theme')
-			return element.setAttribute('data-theme', 'dark')
-		}
-
-		const addReason = () => {
-			reasons++
-			update()
-		}
-
-		const subtractReason = () => {
-			reasons--
-			update()
-		}
-
-		element.addEventListener('focus', addReason)
-		element.addEventListener('blur', subtractReason)
-		element.addEventListener('mouseenter', addReason)
-		element.addEventListener('mouseleave', subtractReason)
-	}
-	document.querySelectorAll<HTMLElement>('[data-home-section-item]').forEach(setup)
-</script>

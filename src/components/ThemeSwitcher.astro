@@ -1,4 +1,4 @@
-<button class='theme-switcher z-10' data-theme-switcher aria-label='toggle theme'>
+<button class='theme-switcher' data-theme-switcher aria-label='toggle theme'>
 	<svg aria-hidden='true' class='theme-switcher-svg' viewBox='0 0 24 24'>
 		<defs>
 			<mask id='mask' stroke='none'>
@@ -45,7 +45,7 @@
 		return setGrid(true)
 	}
 	const themeSwitcherList = document.querySelectorAll('[data-theme-switcher]')
-	themeSwitcherList.forEach(button => {
+	themeSwitcherList.forEach((button) => {
 		button.addEventListener('click', onClick)
 		button.addEventListener('contextmenu', onContextMenu)
 	})

@@ -2,15 +2,24 @@
 import Container from '@components/Container.astro'
 import Row from '@components/Row.astro'
 import Column from '@components/Column.astro'
-import ArticleCanvas from './ArticleCanvas.astro'
+import EtymosCanvas from '@components/EtymosCanvas.astro'
 
 type Props = { title?: string; description?: string; tags?: string[]; hero?: { canvas?: string } }
 
 const { title, description, tags, hero } = Astro.props
+
+const CANVAS_MAP = {
+	etymos: EtymosCanvas,
+} as const
+
+const hasValidCanvasId = (hero?: Props['hero']): hero is { canvas: keyof typeof CANVAS_MAP } =>
+	!!hero?.canvas && hero.canvas in CANVAS_MAP
+
+const Canvas = hasValidCanvasId(hero) && CANVAS_MAP[hero.canvas]
 ---
 
 <div class='relative bg-slate-1 text-slate-12' data-theme='dark'>
-	<ArticleCanvas {...hero} class='absolute h-full w-full print:hidden' />
+	{Canvas && <Canvas class='absolute h-full w-full print:hidden' />}
 	<Container class='relative pt-24 lg:pt-32'>
 		<Row>
 			<Column xs={0} lg={1} xl={2} />
