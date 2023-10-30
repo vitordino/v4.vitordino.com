@@ -3,6 +3,7 @@ import Container from '@components/Container.astro'
 import Row from '@components/Row.astro'
 import Column from '@components/Column.astro'
 import EtymosCanvas from '@components/EtymosCanvas.astro'
+import ReduxtronCanvas from '@components/ReduxtronCanvas.astro'
 
 type Props = { title?: string; description?: string; tags?: string[]; hero?: { canvas?: string } }
 
@@ -10,6 +11,7 @@ const { title, description, tags, hero } = Astro.props
 
 const CANVAS_MAP = {
 	etymos: EtymosCanvas,
+	reduxtron: ReduxtronCanvas,
 } as const
 
 const hasValidCanvasId = (hero?: Props['hero']): hero is { canvas: keyof typeof CANVAS_MAP } =>
@@ -18,7 +20,7 @@ const hasValidCanvasId = (hero?: Props['hero']): hero is { canvas: keyof typeof 
 const Canvas = hasValidCanvasId(hero) && CANVAS_MAP[hero.canvas]
 ---
 
-<div class='bg-slate-1 text-slate-12 relative'>
+<div class='relative bg-slate-1 text-slate-12'>
 	{Canvas && <Canvas class='absolute h-full w-full print:hidden' />}
 	<Container class='relative pt-24 lg:pt-32'>
 		<Row>

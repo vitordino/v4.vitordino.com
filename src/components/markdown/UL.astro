@@ -1,1 +1,11 @@
-<ul class='list-none' {...Astro.props}><slot /></ul>
+---
+import Row from '@components/Row.astro'
+import Column from '@components/Column.astro'
+---
+
+<Row container class='font-serif text-xl leading-10 md:text-2xl md:leading-loose'>
+	<Column xs={0} lg={1} xl={2} />
+	<Column xs={16} lg={12} xl={10}>
+		<ul class='list-[circle]' {...Astro.props}><slot /></ul>
+	</Column>
+</Row>

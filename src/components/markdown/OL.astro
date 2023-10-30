@@ -1,1 +1,13 @@
-<ol class='list-none' {...Astro.props}><slot /></ol>
+---
+import Row from '@components/Row.astro'
+import Column from '@components/Column.astro'
+---
+
+<Row container class='font-serif'>
+	<Column xs={0} lg={1} xl={2} />
+	<Column xs={16} lg={12} xl={10}>
+		<ul class='text-lg list-[decimal-leading-zero]' {...Astro.props}>
+			<slot />
+		</ul>
+	</Column>
+</Row>
