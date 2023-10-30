@@ -2,6 +2,9 @@
 <script>
 	import type { CanvasDraw } from '@utils/canvas'
 	import { setup } from '@utils/canvas'
+
+	const COLOR = '#66666625'
+
 	const range = (n = 0) => [...Array(n)].map((_, i) => i)
 
 	type CircleProps = {
@@ -60,15 +63,16 @@
 		count: number
 		mouseX: number
 		mouseY: number
+		color: string
 	}
-	const ripples = ({ ctx, size, width, height, mouseX, mouseY, count }: RipplesProps) =>
+	const ripples = ({ ctx, size, width, height, mouseX, mouseY, count, color }: RipplesProps) =>
 		range(count).forEach(n => {
 			circle({
 				ctx,
 				size: size * (n + 1),
 				x: mouseX + size * n - n * size * (mouseX / (width / 2)),
 				y: mouseY + size * n - n * size * (mouseY / (height / 2)),
-				stroke: '#1D7969',
+				stroke: color,
 				strokeWidth: 1,
 			})
 		})
@@ -78,8 +82,8 @@
 		({ width, height, mouseX, mouseY }) => {
 			if (!ctx) return
 			ctx.clearRect(0, 0, width, height)
-			grid({ ctx, width, height, color: '#2C2C2C', space: 16, size: 1, padding: 1 })
-			ripples({ ctx, width, height, mouseX, mouseY, size: 16, count: 32 })
+			grid({ ctx, width, height, color: COLOR, space: 16, size: 1, padding: 1 })
+			ripples({ ctx, width, height, mouseX, mouseY, size: 16, count: 32, color: COLOR })
 		}
 
 	document.querySelectorAll<HTMLDivElement>('[data-etymos-canvas]').forEach(setup(draw))
