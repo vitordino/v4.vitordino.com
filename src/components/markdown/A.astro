@@ -1,4 +1,7 @@
 <a
 	class='underline decoration-slate-7 outline-none hover:decoration-slate-11 focus:decoration-slate-11 focus-visible:decoration-slate-11 focus-visible:decoration-[3px] active:decoration-slate-12'
-	{...Astro.props}><slot /></a
+	{...Astro.props}
+	target={Astro.props.href.startsWith('http') ? '_blank' : undefined}
 >
+	<slot />
+</a>
