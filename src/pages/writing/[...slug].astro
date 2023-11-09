@@ -25,9 +25,8 @@ export const getStaticPaths = async () => {
 }
 
 const { entry } = Astro.props
-const { Content, components } = await entry.render()
+const { Content } = await entry.render()
 const customComponents = {
-	...components,
 	blockquote: BlockQuote,
 	h2: H2,
 	p: P,
