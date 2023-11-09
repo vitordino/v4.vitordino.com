@@ -1,5 +1,5 @@
-import type { CanvasDraw } from '@utils/canvas'
-import { setup } from '@utils/canvas'
+import type { CanvasDraw } from 'src/utils/canvas'
+import { setup } from 'src/utils/canvas'
 const range = (n = 0) => [...Array(n)].map((_, i) => i)
 
 type CircleProps = {

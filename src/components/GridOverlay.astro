@@ -1,7 +1,7 @@
 ---
 import tailwindConfig from '../../tailwind.config.ts'
-import Row from '@components/Row.astro'
-import Column from '@components/Column.astro'
+import Row from 'src/components/Row.astro'
+import Column from 'src/components/Column.astro'
 
 const leftPad = (s: number) => (s.toString().length === 1 ? '0' + s : '' + s)
 const fromArray = (length: number) => Array.from({ length }, (_, i) => leftPad(i + 1))
@@ -15,7 +15,7 @@ const screens = Object.entries(tailwindConfig.theme.screens)
 >
 	<Row container>
 		{
-			fromArray(16).map((x) => (
+			fromArray(16).map(x => (
 				<Column xs={1} display='flex' class='min-h-screen items-end bg-tomato-8 bg-opacity-10 py-1'>
 					{x}
 				</Column>
@@ -25,13 +25,13 @@ const screens = Object.entries(tailwindConfig.theme.screens)
 	<div data-grid-overlay-width-element class='absolute bottom-4 left-4 origin-top-left -rotate-90'></div>
 </div>
 <script define:vars={{ screens }}>
-	const getVisibleBreakpoints = (w) => screens.reduce((acc, curr) => (curr[1] > w ? acc : [...acc, curr]), [['xs', 0]])
-	const getCurrentBreakpoint = (w) => getVisibleBreakpoints(w).reverse()[0]
-	const getCurrentBreakpointName = (w) => getCurrentBreakpoint(w)[0]
-	const getHtml = (n) => `<strong>${getCurrentBreakpointName(n)}</strong>: ${n}px`
+	const getVisibleBreakpoints = w => screens.reduce((acc, curr) => (curr[1] > w ? acc : [...acc, curr]), [['xs', 0]])
+	const getCurrentBreakpoint = w => getVisibleBreakpoints(w).reverse()[0]
+	const getCurrentBreakpointName = w => getCurrentBreakpoint(w)[0]
+	const getHtml = n => `<strong>${getCurrentBreakpointName(n)}</strong>: ${n}px`
 
 	const widthElements = document.querySelectorAll('[data-grid-overlay-width-element]')
-	const updateWidthElement = (e) => (e.innerHTML = getHtml(window.innerWidth))
+	const updateWidthElement = e => (e.innerHTML = getHtml(window.innerWidth))
 
 	widthElements.forEach(updateWidthElement)
 	window.addEventListener('resize', () => widthElements.forEach(updateWidthElement))

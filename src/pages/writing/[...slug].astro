@@ -1,20 +1,20 @@
 ---
 import type { Props as SEOProps } from 'astro-seo'
 import { getCollection } from 'astro:content'
-import { siteUrl } from '@utils/url'
-import Layout from '@components/Layout.astro'
-import ArticleHero from '@components/ArticleHero.astro'
-import P from '@components/markdown/P.astro'
-import A from '@components/markdown/A.astro'
-import H2 from '@components/markdown/H2.astro'
-import BlockQuote from '@components/markdown/BlockQuote.astro'
-import Pre from '@components/markdown/Pre.astro'
-import HR from '@components/markdown/HR.astro'
-import OL from '@components/markdown/OL.astro'
-import UL from '@components/markdown/UL.astro'
-import LI from '@components/markdown/LI.astro'
-import Code from '@components/markdown/Code.astro'
-import SaltDisclaimer from '@components/SaltDisclaimer.astro'
+import { siteUrl } from 'src/utils/url'
+import Layout from 'src/components/Layout.astro'
+import ArticleHero from 'src/components/ArticleHero.astro'
+import P from 'src/components/markdown/P.astro'
+import A from 'src/components/markdown/A.astro'
+import H2 from 'src/components/markdown/H2.astro'
+import BlockQuote from 'src/components/markdown/BlockQuote.astro'
+import Pre from 'src/components/markdown/Pre.astro'
+import HR from 'src/components/markdown/HR.astro'
+import OL from 'src/components/markdown/OL.astro'
+import UL from 'src/components/markdown/UL.astro'
+import LI from 'src/components/markdown/LI.astro'
+import Code from 'src/components/markdown/Code.astro'
+import SaltDisclaimer from 'src/components/SaltDisclaimer.astro'
 
 export const getStaticPaths = async () => {
 	const writingEntries = await getCollection('writing')
@@ -79,9 +79,7 @@ const layoutProps: SEOProps = {
 <Layout {...layoutProps}>
 	<main class='writing-article'>
 		<ArticleHero {...entry.data} />
-		{entry.data.salt && (
-			<SaltDisclaimer date={entry.data.date} />
-		)}
+		{entry.data.salt && <SaltDisclaimer date={entry.data.date} />}
 		<Content components={customComponents} />
 	</main>
 </Layout>

@@ -4,10 +4,7 @@
 		"exactOptionalPropertyTypes": false,
 		"baseUrl": ".",
 		"paths": {
-			"@components/*": ["src/components/*"],
-			"@content/*": ["src/content/*"],
-			"@markdown/*": ["src/markdown/*"],
-			"@utils/*": ["src/utils/*"]
+			"src/*": ["src/*"]
 		}
 	}
 }

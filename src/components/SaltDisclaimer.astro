@@ -1,7 +1,7 @@
 ---
-import Column from '@components/Column.astro'
-import Row from '@components/Row.astro'
-import { getRelativeTimeString } from '@utils/time'
+import Column from 'src/components/Column.astro'
+import Row from 'src/components/Row.astro'
+import { getRelativeTimeString } from 'src/utils/time'
 export type Props = { date?: Date }
 const { date } = Astro.props
 ---
@@ -35,7 +35,7 @@ const { date } = Astro.props
 </Row>
 
 <script>
-	import { getRelativeTimeString } from '@utils/time'
+	import { getRelativeTimeString } from 'src/utils/time'
 	const setup = (element: HTMLElement) => {
 		try {
 			const dateString = element.getAttribute('datetime')

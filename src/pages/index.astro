@@ -1,12 +1,12 @@
 ---
 import { getCollection } from 'astro:content'
 import type { Props as SEOProps } from 'astro-seo'
-import { siteUrl } from '@utils/url'
-import { sortCollectionItems } from '@utils/content'
-import Layout from '@components/Layout.astro'
-import HomeHero from '@components/HomeHero.astro'
-import HomeSection from '@components/HomeSection.astro'
-import HomeSectionItem from '@components/HomeSectionItem.astro'
+import { siteUrl } from 'src/utils/url'
+import { sortCollectionItems } from 'src/utils/content'
+import Layout from 'src/components/Layout.astro'
+import HomeHero from 'src/components/HomeHero.astro'
+import HomeSection from 'src/components/HomeSection.astro'
+import HomeSectionItem from 'src/components/HomeSectionItem.astro'
 
 const writing = await getCollection('writing')
 const experience = await getCollection('experience')

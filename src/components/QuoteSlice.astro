@@ -1,6 +1,6 @@
 ---
-import Column from './Column.astro'
-import Row from './Row.astro'
+import Column from 'src/components/Column.astro'
+import Row from 'src/components/Row.astro'
 type Props = { author?: string }
 const { author } = Astro.props
 ---
@@ -25,7 +25,7 @@ const { author } = Astro.props
 				<Row container>
 					<Column xs={0} lg={1} xl={2} />
 					<Column xs={16} lg={12} xl={12}>
-						<cite class='text-md lg:text-xl mt-8 block font-serif leading-6 text-slate-9'>{author}</cite>
+						<cite class='text-md mt-8 block font-serif leading-6 text-slate-9 lg:text-xl'>{author}</cite>
 					</Column>
 				</Row>
 			)
