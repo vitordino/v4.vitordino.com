@@ -28,7 +28,7 @@ It all started when I first had contact with a large desktop application, it had
     ![A diagram showing two blocks ‘interwebs’ on the left side, containing services, and ‘local computer’ on the right side, containing a “backend” layer and a view layer. There’s http requests flowing from view layer to the backend layer, and from both layers to the services inside the ‘interwebs’ block](./http-only-dark.svg)
 </div>
 
-After a while, I realized that although we mostly mimic what happens on these traditional web applications we needed some _extra power_ to accomplish what we envisioned. So we’ve started blindly breaking standards: http endpoints wasn’t enough, we needed something to actually *sync* the 2 sides. So we wrapped our endpoints on [a custom-made web-sockets layer](https://technology.riotgames.com/news/under-hood-league-client%E2%80%99s-hextech-ui#:~:text=DATA%20SYNCHRONIZATION), ideally keeping all the endpoints intact, and _magically_ get updates across the 2 parts of the app using web-socket messages.
+After a while, I realized that although we mostly mimic what happens on traditional web frameworks we needed some _extra power_ to accomplish what we envisioned. We started breaking standards: http endpoints wasn’t enough, so we needed something to *sync* the two sides. So we wrapped our endpoints on [a custom-made web-sockets layer](https://technology.riotgames.com/news/under-hood-league-client%E2%80%99s-hextech-ui#:~:text=DATA%20SYNCHRONIZATION), ideally keeping all the endpoints intact, and _magically_ get updates across the individual parts of the app using web-socket messages.
 
 <div class='dark:hidden'>
     ![A diagram showing two blocks ‘interwebs’ on the left side, containing services, and ‘local computer’ on the right side, containing a “backend” layer and a view layer. There’s http requests from both layers to the services inside the ‘interwebs’ block. But now the view layer connects to the “backend” layer using web-socket messages](./web-sockets-light.svg)
@@ -37,11 +37,11 @@ After a while, I realized that although we mostly mimic what happens on these tr
     ![A diagram showing two blocks ‘interwebs’ on the left side, containing services, and ‘local computer’ on the right side, containing a “backend” layer and a view layer. There’s http requests from both layers to the services inside the ‘interwebs’ block. But now the view layer connects to the “backend” layer using web-socket messages](./web-sockets-dark.svg)
 </div>
 
-While it’s a bit *magical* and really served the needs for a bunch of years, iterating on a product with so many layers felt a bit too tiresome, error prone, and mostly inneficient. We ended up using this proprietary communication layer between every 2 pieces of the app (called plugins), and that required:
+While it’s a bit *magical* and really served the needs for a considerate amount of time, iterating on a product with so many layers felt a bit too tiresome, error prone, and mostly inneficient. We ended up using this proprietary communication layer between every software piece, but as there was multiple programming languages, it required:
 
-1. serializing the state to json when sending data
-1. deserializing from json to a custom `struct` when consuming data
-1. a [_non-circular_ directed graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) to coordinate dependencies between these internal pieces
+1. serializing the internal state to json for sending data
+1. deserializing the json to a custom `struct` for consuming data
+1. make sure the application was still describable as a [_non-circular_ directed graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) for coordinating dependencies between these internal pieces
 
 <div class='dark:hidden'>
     ![A diagram showing two blocks ‘interwebs’ on the left side, containing services, and ‘local computer’ on the right side, containing a group of plugins as the “backend” layer and a view layer. There’s http requests from each plugin and the view layer to the services inside the ‘interwebs’ block. But now the bottom plugins receive web-socket messages from the plugins above them, and the view layer also requests web-sockets messages from the plugins](./plugins-light.svg)
@@ -50,7 +50,7 @@ While it’s a bit *magical* and really served the needs for a bunch of years, i
     ![A diagram showing two blocks ‘interwebs’ on the left side, containing services, and ‘local computer’ on the right side, containing a group of plugins as the “backend” layer and a view layer. There’s http requests from each plugin and the view layer to the services inside the ‘interwebs’ block. But now the bottom plugins receive web-socket messages from the plugins above them, and the view layer also requests web-sockets messages from the plugins](./plugins-dark.svg)
 </div>
 
-I felt that the aforementioned limitations started slowing us down and was really cumbersome to explain all the gymnastics we have to do overcome them.
+I felt that the aforementioned limitations started slowing us down, and the whole system was pretty cumbersome to explain all the gymnastics we put in place to overcome the shortcomings.
 
 </TextSlice>
 
@@ -60,15 +60,15 @@ I felt that the aforementioned limitations started slowing us down and was reall
 
 <TextSlice>
 
-That phrase struck me: only the _utterly derranged_ would dream of putting these words together — _but also_ — what more could we lose? We were still wandering, looking for alternatives, and no obvious one seemed to fit. We even tried following the best practices of api and web development and it didn’t solved all our problems, at least not on the long run.
+That phrase struck me: only the _utterly derranged_ would dream of putting these words together — _but also_ — what more could we lose? We were still wandering, looking for alternatives, and no obvious one seemed to fit. We even tried following the best practices of api and web development. However, that didn’t solved all our problems, at least not on the long run.
 
-Then, reassessing the phrase, it all made sense: we weren’t building a traditional client/server web application, the "frontend" and "backend" weren’t miles apart: they were the same application! running on the same computer!
+Then, reassessing the phrase, it all made sense: we weren’t building a traditional client/server web application. The “frontend” and “backend” weren’t miles apart: they were the same application! _Running on the same computer!_
 
 > No matter how many programming languages, or how deep the system calls would be, the application was still mostly frontend: a client to some external services.
 
-Of course a typical html+css+js inside a browser can’t achieve everything a desktop application might want to do. Some features needs code outside the browser window, interacting with the system, io, etc. But that doesn’t mean the communication between these 2 parts *need* to be complex.
+Of course a typical html+css+js inside a browser can’t achieve everything a desktop application might want to do. Some features needs code outside the browser window, interacting with the system, io, etc. But that doesn’t mean the communication *need* to be complex.
 
-Looking for inspiration, most of the resources online of "electron+redux" points to the typical way of using redux on the frontend, either under the react tree or some other frontend framework.
+Looking for inspiration, most of the resources online of “`electron`+`redux`” points to the typical way of using redux on the frontend, either under the react tree or some other frontend framework.
 
 <div class='dark:hidden'>
     ![A diagram showing two blocks ‘interwebs’ on the left side, now empty, and ‘local computer’ on the right side, containing a ‘node main process’ and a ‘renderer process’, the latter containing the react logo a plus sign and the redux logo. There are dotted lines with a question mark between the ‘interwebs’ and the ‘local computer’, and another one between the processes inside the ‘local computer’](./react-redux-light.svg)
@@ -81,9 +81,9 @@ Looking for inspiration, most of the resources online of "electron+redux" points
 
 <TextSlice>
 
-But I knew there was potential to use it to bridge the node layer (usually called the "main" process) and other parts of the app.
+But I knew there was potential to use it to bridge the node layer (usually called the “main” process) and other parts of the app.
 
-On github and reading some blog posts, I discovered that many people also used express.js (or other generic node server library) on the main process. So one idea we could try standardizing redux inside http, but I feel like coming back to the same complexity/indirection road we strive for getting away from.
+On github and reading some blog posts, I discovered many electron projects also used express.js (or other generic node server library) on the main process. So one idea we could try standardizing redux inside http, but I feel like coming back to the same complexity/indirection road we strive for getting away from.
 
 <div class='dark:hidden'>
     ![tutorials](./tutorials-light2.svg)
@@ -92,9 +92,9 @@ On github and reading some blog posts, I discovered that many people also used e
     ![tutorials](./tutorials-dark2.svg)
 </div>
 
-Reading a bit closer to the source — on electron’s documentation — I realized it also exposed this ["inter-proccess communication" api](https://electronjs.org/docs/latest/api/ipc-main) that allows different parts of the application to talk to each other on this 2-way event handling fashion using anything that could be [serialized](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) as messages, going through named channels.
+Reading a bit closer to the source — on electron’s documentation — I realized it also exposed this [“inter-proccess communication” api](https://electronjs.org/docs/latest/api/ipc-main) that allows different parts of the application to talk to each other on this 2-way event handling fashion using anything that could be [serialized](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) as messages, going through named channels.
 
-The examples are usually to open [some native dialog](https://electronjs.org/docs/latest/tutorial/ipc#pattern-2-renderer-to-main-two-way) or simple things like console logging inputs from the other side, but it was always kinda boresome to write, and didn’t granted end-to-end type-safeness (you need to write it your self on both ends, what each message on each channel receives/returns).
+The examples are usually to open [some native dialog](https://electronjs.org/docs/latest/tutorial/ipc#pattern-2-renderer-to-main-two-way) or simple things like console logging inputs from the other side, but it was always boresome to write. On top of that, it didn’t granted end-to-end type-safeness (you need to write it your self on both processes, what each message on each channel receives and returns).
 
 </TextSlice>
 
@@ -114,7 +114,7 @@ I was lucky to find we weren’t the only crazy ones, it turns out [Klarna](http
     ![reduxtron](./reduxtron-dark.svg)
 </div>
 
-It took just couple hours to create an proof-of-concept — after all, it’s just typescript, running on both sides. Most of the work was figuring out what we wanted, the technical part was basically integrating 2 well defined and well documented APIs.
+It took just couple hours to create a proof-of-concept — after all, it’s just typescript, running on both sides. Most of the work was figuring out what we wanted, and the technical part was basically integrating two well defined and well documented APIs.
 
 </TextSlice>
 
@@ -122,9 +122,9 @@ It took just couple hours to create an proof-of-concept — after all, it’s ju
 
 ## What’s next?
 
-As usual, i got excited with the idea, and evolved the naïve proof-of-concept as an open-source library called [reduxtron](https://github.com/vitordino/reduxtron), it contains a [demo application](https://github.com/vitordino/reduxtron/tree/main/packages/demo) showing off some cool features and streamlined boilerplates focused on [react](https://github.com/vitordino/reduxtron/tree/main/packages/boilerplate-react), [svelte](https://github.com/vitordino/reduxtron/tree/main/packages/boilerplate-svelte) and [vue](https://github.com/vitordino/reduxtron/tree/main/packages/boilerplate-vue) development.
+As usual, i got excited with the idea, and evolved the naïve proof-of-concept as an open-source library called [reduxtron](https://github.com/vitordino/reduxtron): it contains a [demo application](https://github.com/vitordino/reduxtron/tree/main/packages/demo) showing off some cool features and also some streamlined boilerplates focused on [react](https://github.com/vitordino/reduxtron/tree/main/packages/boilerplate-react), [svelte](https://github.com/vitordino/reduxtron/tree/main/packages/boilerplate-svelte) and [vue](https://github.com/vitordino/reduxtron/tree/main/packages/boilerplate-vue) development.
 
-The core library is rather small, and it already follows the latest electron safety guidelines, so i don’t expect to need that much maintenance or adding feaures. As it’s backed by `redux`™, you can plug your own logic, or use libraries like [`redux-undo`](https://github.com/omnidan/redux-undo))
+The core library is rather small and already follows the latest electron safety guidelines, so i don’t expect to need that much maintenance or adding feaures. As it’s backed by `redux`™, you can plug your own logic, or use libraries like [`redux-undo`](https://github.com/omnidan/redux-undo))
 
 </TextSlice>
 
@@ -132,7 +132,8 @@ The core library is rather small, and it already follows the latest electron saf
 
 ## Related reads:
 
-* [Klarna](https://klarna.com/)’s [`electron-redux`](https://github.com/klarna/electron-redux) library
+* The [`reduxtron` repo](https://github.com/vitordino/reduxtron)
+* [Klarna](https://klarna.com/)’s [`electron-redux` library](https://github.com/klarna/electron-redux)
 * [Local-first web development](https://localfirstweb.dev/)
 
 </TextSlice>
