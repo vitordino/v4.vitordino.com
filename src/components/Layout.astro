@@ -5,6 +5,7 @@ import Logo from '@components/Logo.astro'
 import PhotoLogo from './PhotoLogo.astro'
 import GridOverlay from '@components/GridOverlay.astro'
 import ThemeSwitcher from '@components/ThemeSwitcher.astro'
+import Container from './Container.astro'
 
 export type Props = SEOProps
 ---
@@ -89,6 +90,12 @@ export type Props = SEOProps
 		</style>
 	</head>
 	<body>
+		<div aria-hidden='true' class='relative my-2 hidden print:block'>
+			<Container class='flex justify-between align-baseline'>
+				<div class='text-slate-11'>Vitor Dino</div>
+				<div class='font-mono text-xs text-slate-8 underline decoration-slate-4'>vitordino.com</div>
+			</Container>
+		</div>
 		<header class='print:hidden'>
 			<nav>
 				<Logo />
