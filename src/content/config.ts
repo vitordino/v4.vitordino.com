@@ -16,10 +16,8 @@ const writing = defineCollection({
 		title: z.string(),
 		date: z.date(),
 		description: z.string(),
-		ogImage: z.string(),
-		twitterImage: z.string(),
 		tags: z.array(z.string()),
-		hero: z.optional(z.object({ canvas: z.string() })),
+		hero: z.optional(z.object({ canvas: z.string(), mouse: z.optional(z.tuple([z.number(), z.number()])) })),
 		salt: z.optional(z.boolean()),
 	}),
 })

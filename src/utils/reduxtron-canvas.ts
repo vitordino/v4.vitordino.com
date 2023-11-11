@@ -1,5 +1,4 @@
 import type { CanvasDraw } from 'src/utils/canvas'
-import { setup } from 'src/utils/canvas'
 
 const COLOR = '#66666625'
 const SPACE = 16
@@ -18,7 +17,7 @@ const line: Line = ctx => (x1, y1, x2, y2) => {
 	ctx.stroke()
 }
 
-const draw: CanvasDraw =
+export const draw: CanvasDraw =
 	ctx =>
 	({ width, height, mouseX, mouseY }) => {
 		if (!ctx) return
@@ -70,5 +69,3 @@ const draw: CanvasDraw =
 			})
 		})
 	}
-
-document.querySelectorAll<HTMLDivElement>('[data-reduxtron-canvas]').forEach(setup(draw))

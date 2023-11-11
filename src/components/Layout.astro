@@ -1,111 +1,31 @@
 ---
-import { SEO } from 'astro-seo'
 import type { Props as SEOProps } from 'astro-seo'
+import Html from 'src/components/Html.astro'
 import Logo from 'src/components/Logo.astro'
 import PhotoLogo from 'src/components/PhotoLogo.astro'
 import GridOverlay from 'src/components/GridOverlay.astro'
 import ThemeSwitcher from 'src/components/ThemeSwitcher.astro'
 import Container from 'src/components/Container.astro'
 
-export type Props = SEOProps
+export type Props = SEOProps | {}
 ---
 
-<!doctype html>
-<html lang='en' class='bg-slate-1 text-slate-12' style='--bg: hsl(var(--slate1))'>
-	<head>
-		<meta charset='UTF-8' />
-		<meta name='viewport' content='width=device-width' />
-		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-		<SEO {...Astro.props} />
-		<script is:inline>
-			const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-			const getTheme = () => {
-				const media = darkMediaQuery.matches ? 'dark' : 'light'
-				const user = localStorage?.getItem?.('theme')
-				return user || media
-			}
-
-			const getGrid = () => localStorage.getItem('grid')
-
-			const html = document.documentElement
-
-			html.setAttribute('data-theme', getTheme())
-			html.setAttribute('data-grid', getGrid())
-			darkMediaQuery.addEventListener('change', () => html.setAttribute('data-theme', getTheme()))
-			window.addEventListener('storage', e => {
-				if (e.key === 'theme') return html.setAttribute('data-theme', getTheme())
-				if (e.key === 'grid') return html.setAttribute('data-grid', getGrid())
-			})
-		</script>
-		<style is:global>
-			html {
-				-webkit-font-smoothing: antialiased;
-				font-smoothing: antialiased;
-				font-feature-settings:
-					'kern',
-					'liga',
-					'calt',
-					'pnum' 0,
-					'tnum',
-					'onum' 0,
-					'lnum',
-					'dlig',
-					'zero',
-					'case';
-			}
-			@font-face {
-				font-family: Redaction;
-				src: url('/fonts/redaction/Redaction-Regular.woff2') format('woff2');
-				font-weight: 400;
-			}
-			@font-face {
-				font-family: Redaction;
-				src: url('/fonts/redaction/Redaction-Bold.woff2') format('woff2');
-				font-weight: 600;
-			}
-			@font-face {
-				font-family: Redaction;
-				src: url('/fonts/redaction/Redaction-Italic.woff2') format('woff2');
-				font-style: italic;
-			}
-			@font-face {
-				font-family: 'Redaction35';
-				src: url('/fonts/redaction/Redaction35-Regular.woff2') format('woff2');
-				font-weight: 400;
-			}
-			@font-face {
-				font-family: 'Redaction35';
-				src: url('/fonts/redaction/Redaction35-Bold.woff2') format('woff2');
-				font-weight: 600;
-			}
-			@font-face {
-				font-family: 'Redaction35';
-				src: url('/fonts/redaction/Redaction35-Italic.woff2') format('woff2');
-				font-style: italic;
-			}
-			::selection {
-				background: hsl(var(--slate12) / 1);
-				color: hsl(var(--slate1) / 1);
-			}
-		</style>
-	</head>
-	<body>
-		<div aria-hidden='true' class='relative my-2 hidden print:block'>
-			<Container class='flex justify-between align-baseline'>
-				<div class='text-slate-11'>Vitor Dino</div>
-				<div class='font-mono text-xs text-slate-8 underline decoration-slate-4'>vitordino.com</div>
-			</Container>
-		</div>
-		<header class='print:hidden'>
-			<nav>
-				<Logo />
-				<PhotoLogo />
-			</nav>
-		</header>
-		<slot />
-		<footer class='print:hidden'>
-			<GridOverlay />
-			<ThemeSwitcher />
-		</footer>
-	</body>
-</html>
+<Html {...Astro.props}>
+	<div aria-hidden='true' class='relative my-2 hidden print:block'>
+		<Container class='flex justify-between align-baseline'>
+			<div class='text-slate-11'>Vitor Dino</div>
+			<div class='font-mono text-xs text-slate-8 underline decoration-slate-4'>vitordino.com</div>
+		</Container>
+	</div>
+	<header class='print:hidden'>
+		<nav>
+			<Logo />
+			<PhotoLogo />
+		</nav>
+	</header>
+	<slot />
+	<footer class='print:hidden'>
+		<GridOverlay />
+		<ThemeSwitcher />
+	</footer>
+</Html>

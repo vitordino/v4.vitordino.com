@@ -1,4 +1,6 @@
 <div data-reduxtron-canvas class={Astro.props.class}></div>
 <script>
-	import 'src/utils/reduxtron-canvas'
+	import { draw } from 'src/utils/reduxtron-canvas'
+	import { setup } from 'src/utils/canvas'
+	document.querySelectorAll<HTMLDivElement>('[data-reduxtron-canvas]').forEach(setup(draw))
 </script>

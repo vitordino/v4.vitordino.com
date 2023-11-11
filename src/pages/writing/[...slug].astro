@@ -41,32 +41,25 @@ const customComponents = {
 
 const title = `Vitor Dino — ${entry.data.title}`
 
-const ogImageSrc = entry.data.ogImage ? `${siteUrl}/${entry.data.ogImage}` : undefined
-const twitterImageSrc = entry.data.twitterImage ? `${siteUrl}/${entry.data.twitterImage}` : undefined
+const openGraph: SEOProps['openGraph'] = {
+	basic: {
+		title: entry.data.description,
+		type: 'article',
+		image: `${siteUrl}/og-image/writing/${entry.slug}.png`,
+	},
+	optional: {
+		locale: 'en_US',
+		siteName: 'vitordino.com',
+	},
+}
 
-const openGraph: SEOProps['openGraph'] = ogImageSrc
-	? {
-			basic: {
-				title: entry.data.description,
-				type: 'article',
-				image: ogImageSrc,
-			},
-			optional: {
-				locale: 'en_US',
-				siteName: 'vitordino.com',
-			},
-	  }
-	: undefined
-
-const twitter: SEOProps['twitter'] = twitterImageSrc
-	? {
-			card: 'summary_large_image',
-			title,
-			description: entry.data.description,
-			image: twitterImageSrc,
-			imageAlt: entry.data.title,
-	  }
-	: undefined
+const twitter: SEOProps['twitter'] = {
+	card: 'summary_large_image',
+	title,
+	description: entry.data.description,
+	image: `${siteUrl}/og-image/writing/${entry.slug}.png`,
+	imageAlt: entry.data.title,
+}
 
 const layoutProps: SEOProps = {
 	title,

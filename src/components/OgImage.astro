@@ -1,0 +1,81 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import Html from './Html.astro'
+
+type Props = Partial<CollectionEntry<'writing'>['data']>
+const { title, hero } = Astro.props
+---
+
+<Html>
+	<div data-theme='light'>
+		<div class='relative flex bg-slate-1' style='width: 1200px; height: 630px; text-wrap: balance;'>
+			<div class='absolute m-10 h-8 w-8'>
+				<svg width='800' height='800' viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg' class='h-full w-full'>
+					<path
+						d='M800 400C800 620.914 620.914 800 400 800H0V400V0H400C620.914 0 800 179.086 800 400ZM583 150H321.061L100.172 532.8V700H267.207L583 150Z'
+						class='fill-slate-12'></path>
+				</svg>
+			</div>
+			<canvas
+				data-canvas-id={hero?.canvas}
+				data-mouse-x={hero?.mouse?.[0]}
+				data-mouse-y={hero?.mouse?.[1]}
+				class='absolute h-full w-full print:hidden'></canvas>
+			<div class='relative self-end px-10 py-12'>
+				{title && <div class='max-w-xl text-5xl font-[500] leading-tight'>{title}</div>}
+			</div>
+		</div>
+	</div>
+</Html>
+
+<script>
+	import type { CanvasDraw } from 'src/utils/canvas'
+	import { draw as home } from 'src/utils/home-canvas'
+	import { draw as etymos } from 'src/utils/etymos-canvas'
+	import { draw as reduxtron } from 'src/utils/reduxtron-canvas'
+
+	const CANVAS_MAP: Record<string, CanvasDraw> = { home, etymos, reduxtron }
+
+	const extractAttributes = (canvas: HTMLCanvasElement) => {
+		const { width, height, top, left } = canvas.getBoundingClientRect()
+
+		return {
+			width,
+			height,
+			top,
+			left,
+			canvasId: canvas.getAttribute('data-canvas-id'),
+			mouseX: parseInt(canvas.getAttribute('data-mouse-x') ?? `${width / 2}`),
+			mouseY: parseInt(canvas.getAttribute('data-mouse-y') ?? `${height / 2}`),
+		}
+	}
+
+	const retina = ({
+		canvas,
+		ctx,
+		width,
+		height,
+	}: {
+		canvas: HTMLCanvasElement
+		ctx: CanvasRenderingContext2D
+		width: number
+		height: number
+	}) => {
+		const ratio = 2
+		canvas.width = width * ratio
+		canvas.height = height * ratio
+		ctx.scale(ratio * 2, ratio * 2)
+	}
+
+	const main = () => {
+		const canvas = document.querySelector('canvas')
+		const ctx = canvas?.getContext('2d')
+		if (!canvas || !ctx) return
+		const { width, height, top, left, canvasId, mouseX, mouseY } = extractAttributes(canvas)
+		retina({ canvas, ctx, width, height })
+		const draw = CANVAS_MAP[canvasId || 'home'] || home
+		draw(ctx)({ width, height, left, top, mouseX: mouseX / 2, mouseY: mouseY / 2 })
+	}
+
+	window.addEventListener('load', main)
+</script>

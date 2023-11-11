@@ -1,4 +1,6 @@
 <div data-etymos-canvas class={Astro.props.class}></div>
 <script>
-	import 'src/utils/etymos-canvas'
+	import { draw } from 'src/utils/etymos-canvas'
+	import { setup } from 'src/utils/canvas'
+	document.querySelectorAll<HTMLDivElement>('[data-etymos-canvas]').forEach(setup(draw))
 </script>

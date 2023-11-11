@@ -7,9 +7,10 @@
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
-		"build": "astro build",
+		"build": "npx playwright test && astro build",
 		"preview": "astro preview",
-		"astro": "astro"
+		"astro": "astro",
+		"postinstall": "npx playwright install"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.3.1",
@@ -26,6 +27,7 @@
 		"typescript": "^5.2.2"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.39.0",
 		"@radix-ui/colors": "^2.1.0",
 		"@types/node": "^20.8.9",
 		"prettier": "^3.0.3",

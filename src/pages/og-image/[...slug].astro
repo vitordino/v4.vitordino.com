@@ -1,0 +1,21 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+
+import OgImage from 'src/components/OgImage.astro'
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	if (import.meta.env.MODE === 'production') return []
+	const writingEntries = await getCollection('writing')
+	const writingPaths = writingEntries.map(entry => ({
+		params: { slug: `/writing/${entry.slug}` },
+		props: { entry },
+	}))
+	return [...writingPaths]
+}
+export type Props = { entry: CollectionEntry<'writing'> }
+const { entry } = Astro.props
+---
+
+<OgImage {...entry.data} />

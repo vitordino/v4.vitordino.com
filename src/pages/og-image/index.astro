@@ -1,0 +1,10 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import OgImage from 'src/components/OgImage.astro'
+
+export type Data = Partial<CollectionEntry<'writing'>['data']>
+
+const data: Data = {}
+---
+
+<OgImage {...data} />

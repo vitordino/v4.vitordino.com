@@ -1,5 +1,4 @@
 import type { CanvasDraw } from 'src/utils/canvas'
-import { setup } from 'src/utils/canvas'
 const range = (n = 0) => [...Array(n)].map((_, i) => i)
 
 type CircleProps = {
@@ -71,7 +70,7 @@ const ripples = ({ ctx, size, width, height, mouseX, mouseY, count }: RipplesPro
 		})
 	})
 
-const draw: CanvasDraw =
+export const draw: CanvasDraw =
 	ctx =>
 	({ width, height, mouseX, mouseY }) => {
 		if (!ctx) return
@@ -79,5 +78,3 @@ const draw: CanvasDraw =
 		grid({ ctx, width, height, color: '#66666625', space: 16, size: 1, padding: 1 })
 		ripples({ ctx, width, height, mouseX, mouseY, size: 16, count: 32 })
 	}
-
-document.querySelectorAll<HTMLDivElement>('[data-etymos-canvas]').forEach(setup(draw))
