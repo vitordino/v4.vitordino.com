@@ -11,6 +11,7 @@ export default {
 		...defaultTheme,
 		extend: {
 			fontFamily: {
+				sans: ['Geist', ...defaultTheme.fontFamily.sans],
 				serif: ['Redaction', ...defaultTheme.fontFamily.serif],
 				serif35: ['Redaction35', ...defaultTheme.fontFamily.serif],
 			},
