@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content'
+import { sortCollectionItems } from 'src/utils/content'
+import Layout from 'src/components/Layout.astro'
+import HomeSection from 'src/components/HomeSection.astro'
+import HomeSectionItem from 'src/components/HomeSectionItem.astro'
+import { seo } from 'src/pages/index.astro'
+
+const writing = await getCollection('writing')
+---
+
+<Layout {...seo}>
+	<main class='relative bg-slate-1'>
+		<HomeSection title='writing'>
+			{
+				sortCollectionItems(writing).map(({ slug, data }) => (
+					<HomeSectionItem
+						href={`/writing/${slug}`}
+						title={data.title}
+						description={data.description}
+						right={data.date.getUTCFullYear().toString()}
+					/>
+				))
+			}
+		</HomeSection>
+	</main>
+</Layout>
