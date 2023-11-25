@@ -6,6 +6,8 @@ import PhotoLogo from 'src/components/PhotoLogo.astro'
 import GridOverlay from 'src/components/GridOverlay.astro'
 import ThemeSwitcher from 'src/components/ThemeSwitcher.astro'
 import Container from 'src/components/Container.astro'
+import DribbbleLogo from './DribbbleLogo.astro'
+import GithubLogo from './GithubLogo.astro'
 
 export type Props = SEOProps | {}
 ---
@@ -18,9 +20,13 @@ export type Props = SEOProps | {}
 		</Container>
 	</div>
 	<header class='print:hidden'>
-		<nav>
+		<nav class='pointer-events-none fixed left-0 right-0 top-0 z-10 flex justify-between mix-blend-exclusion'>
 			<Logo />
-			<PhotoLogo />
+			<div class='flex justify-between'>
+				<DribbbleLogo />
+				<GithubLogo />
+				<PhotoLogo />
+			</div>
 		</nav>
 	</header>
 	<slot />
