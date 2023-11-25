@@ -10,6 +10,7 @@ import HomeSectionItem from 'src/components/HomeSectionItem.astro'
 
 const writing = await getCollection('writing')
 const experience = await getCollection('experience')
+const education = await getCollection('education')
 
 const seo: SEOProps = {
 	title: 'Vitor Dino',
@@ -53,6 +54,13 @@ const seo: SEOProps = {
 		<HomeSection title='experience'>
 			{
 				sortCollectionItems(experience).map(({ data }) => (
+					<HomeSectionItem href={data.to} title={data.title} description={data.description} right={data.dateRange} />
+				))
+			}
+		</HomeSection>
+		<HomeSection title='education'>
+			{
+				sortCollectionItems(education).map(({ data }) => (
 					<HomeSectionItem href={data.to} title={data.title} description={data.description} right={data.dateRange} />
 				))
 			}

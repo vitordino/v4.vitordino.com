@@ -10,6 +10,16 @@ const experience = defineCollection({
 	}),
 })
 
+const education = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		dateRange: z.string(),
+		to: z.string(),
+		description: z.string(),
+	}),
+})
+
 const writing = defineCollection({
 	type: 'content',
 	schema: z.object({
@@ -23,4 +33,4 @@ const writing = defineCollection({
 })
 // 3. Export a single `collections` object to register your collection(s)
 //    This key should match your collection directory name in "src/content"
-export const collections = { writing, experience }
+export const collections = { writing, experience, education }
