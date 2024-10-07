@@ -7,6 +7,7 @@ const experience = defineCollection({
 		dateRange: z.string(),
 		to: z.string(),
 		description: z.string(),
+		type: z.literal('hidden').optional(),
 	}),
 })
 
@@ -17,6 +18,7 @@ const education = defineCollection({
 		dateRange: z.string(),
 		to: z.string(),
 		description: z.string(),
+		type: z.literal('hidden').optional(),
 	}),
 })
 
@@ -29,6 +31,7 @@ const writing = defineCollection({
 		tags: z.array(z.string()),
 		hero: z.optional(z.object({ canvas: z.string(), mouse: z.optional(z.tuple([z.number(), z.number()])) })),
 		salt: z.optional(z.boolean()),
+		type: z.literal('hidden').optional(),
 	}),
 })
 // 3. Export a single `collections` object to register your collection(s)
