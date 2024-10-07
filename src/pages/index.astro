@@ -41,28 +41,34 @@ export const seo: SEOProps = {
 	<main class='relative bg-slate-1'>
 		<HomeSection title='writing'>
 			{
-				sortCollectionItems(writing).map(({ slug, data }) => (
-					<HomeSectionItem
-						href={`/writing/${slug}`}
-						title={data.title}
-						description={data.description}
-						right={data.date.getUTCFullYear().toString()}
-					/>
-				))
+				sortCollectionItems(writing)
+					.filter(({ data }) => data?.type !== 'hidden')
+					.map(({ slug, data }) => (
+						<HomeSectionItem
+							href={`/writing/${slug}`}
+							title={data.title}
+							description={data.description}
+							right={data.date.getUTCFullYear().toString()}
+						/>
+					))
 			}
 		</HomeSection>
 		<HomeSection title='experience'>
 			{
-				sortCollectionItems(experience).map(({ data }) => (
-					<HomeSectionItem href={data.to} title={data.title} description={data.description} right={data.dateRange} />
-				))
+				sortCollectionItems(experience)
+					.filter(({ data }) => data?.type !== 'hidden')
+					.map(({ data }) => (
+						<HomeSectionItem href={data.to} title={data.title} description={data.description} right={data.dateRange} />
+					))
 			}
 		</HomeSection>
 		<HomeSection title='education'>
 			{
-				sortCollectionItems(education).map(({ data }) => (
-					<HomeSectionItem href={data.to} title={data.title} description={data.description} right={data.dateRange} />
-				))
+				sortCollectionItems(education)
+					.filter(({ data }) => data?.type !== 'hidden')
+					.map(({ data }) => (
+						<HomeSectionItem href={data.to} title={data.title} description={data.description} right={data.dateRange} />
+					))
 			}
 		</HomeSection>
 	</main>
