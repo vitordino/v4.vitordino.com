@@ -12,6 +12,9 @@
 		"astro": "astro",
 		"postinstall": "npx playwright install"
 	},
+	"engines": {
+		"node": "22.x"
+	},
 	"dependencies": {
 		"@astrojs/check": "^0.3.1",
 		"@astrojs/mdx": "^1.1.3",
