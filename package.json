@@ -10,7 +10,7 @@
 		"build": "npx playwright test && astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"postinstall": "npx playwright install"
+		"postinstall": "npx playwright install-deps && npx playwright install --with-deps"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.3.1",

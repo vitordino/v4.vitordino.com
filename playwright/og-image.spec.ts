@@ -3,6 +3,7 @@ import { readdir } from 'node:fs/promises'
 import { join } from 'node:path'
 
 test('create og image for home', async ({ page }) => {
+	console.log('creating og image for home')
 	await page.goto('http://localhost:4321/og-image')
 	await page.waitForLoadState('domcontentloaded')
 	await page.screenshot({ path: './public/og-image/index.png' })
@@ -24,9 +25,3 @@ test('create og image for articles', async ({ page }) => {
 		await page.screenshot({ path: `./public/og-image/writing/${slug}.png` })
 	}
 })
-
-// const main = async () => {
-// 	const articles = await getArticles()
-// 	console.log(articles)
-// }
-// main()
